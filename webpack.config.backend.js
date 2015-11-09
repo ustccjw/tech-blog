@@ -10,8 +10,11 @@ fs.readdirSync('node_modules').
 	forEach(mod => nodeModules[mod] = 'commonjs ' + mod)
 
 module.exports = {
-	entry: './server/server.js',
 	target: 'node',
+	entry: [
+		'webpack/hot/poll?1000',
+		'./server/server.js',
+	],
 	module: {
 		loaders: [{
 			test: /\.js$/,
@@ -29,8 +32,11 @@ module.exports = {
 	},
 	externals: nodeModules,
 	plugins: [
-		new webpack.BannerPlugin('require("source-map-support").install();',
-			{raw: true, entryOnly: false}),
+		new webpack.HotModuleReplacementPlugin(),
+		new webpack.BannerPlugin('require("source-map-support").install();', {
+			raw: true,
+			entryOnly: false,
+		}),
 	],
 	devtool: 'sourcemap',
 }

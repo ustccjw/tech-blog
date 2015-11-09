@@ -39,7 +39,7 @@ app.use(session({
 
 // body,cookie parse
 app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 
 // add X-Response-Time

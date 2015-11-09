@@ -4,7 +4,7 @@ const path = require('path')
 const gulp = require('gulp')
 const webpack = require('webpack')
 const del = require('del')
-const nodemon = require('nodemon')
+const spawn = require('child_process').spawn
 const backendConfig = require('./webpack.config.backend')
 
 const buildPath = backendConfig.output.path
@@ -15,27 +15,26 @@ gulp.task('backend-watch', done => {
 	let firedDone = false
 	webpack(backendConfig).watch(100, (err, stats) => {
 		onBuild(err, stats)
-		nodemon.restart()
-		if(!firedDone) {
-			done()
-			firedDone = true
-		}
+		done()
 	})
 })
 
 gulp.task('server-start', done => {
-	nodemon({
-		execMap: {
-			js: 'node',
-		},
-		script: path.join(__dirname, 'build/backend'),
-		ignore: ['*'],
-		watch: ['foo/'],
-		ext: 'noop',
-	}).on('restart', () => {
-		console.log('Patched!')
+	const entry = path.join(__dirname, 'build/backend')
+	const server = spawn('node', [entry])
+	server.stdout.on('data', data => {
+		data = data.toString().replace(/\n$/, '')
+		console.log(`stdout: ${data}`)
 	})
-	done()
+
+	server.stderr.on('data', data => {
+		data = data.toString().replace(/\n$/, '')
+		console.log(`stderr: ${data}`)
+	})
+
+	server.on('exit', code => {
+		console.log(`child process exited with code ${code}`)
+	})
 })
 
 gulp.task('watch', gulp.parallel('backend-watch'))
