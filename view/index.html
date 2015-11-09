@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="utf-8">
+	<title>ustccjw tech blog</title>
+</head>
+<body>
+	<div class="react-root"></div>
+	<script src="/falcor.browser.min.js"></script>
+	<script>
+		var model = new falcor.Model({
+			source: new falcor.HttpDataSource('/model.json')
+		})
+		model.get(['articles']).
+			then(value => {
+				console.log(value)
+			})
+	</script>
+</body>
+</html>
