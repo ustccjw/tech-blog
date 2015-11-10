@@ -13,8 +13,8 @@ if (module.hot) {
 	module.hot.accept('./', () => {
 		try {
 			hotApp = require('./')
-		} catch (e) {
-			console.log(e)
+		} catch (error) {
+			console.error(error.stack)
 			return
 		}
 		server.removeListener('request', hotApp)

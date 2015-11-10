@@ -23,15 +23,11 @@ gulp.task('server-start', done => {
 	const entry = path.join(__dirname, 'build/backend')
 	const server = spawn('node', [entry])
 	server.stdout.on('data', data => {
-		data = data.toString().replace(/\n$/, '')
-		console.log(`stdout: ${data}`)
+		process.stdout.write(data)
 	})
-
 	server.stderr.on('data', data => {
-		data = data.toString().replace(/\n$/, '')
-		console.log(`stderr: ${data}`)
+		process.stderr.write(data)
 	})
-
 	server.on('exit', code => {
 		console.log(`child process exited with code ${code}`)
 	})
@@ -50,8 +46,8 @@ const outputOptions = {
 }
 
 function onBuild(err, stats) {
-	if(err) {
+	if (err) {
 		throw new Error(err)
 	}
-	console.log(stats.toString(outputOptions))
+	console.log('----------\n', stats.toString(outputOptions), '\n----------')
 }
