@@ -8,10 +8,10 @@ import ModelRouter from './model-router'
 
 // public resource
 app.use(favicon(path.join(app.get('ROOT'), 'public/favicon.ico')))
-app.use(serveStatic(path.join(app.get('ROOT'), 'public'), {maxAge: '1d'}))
+app.use(serveStatic(path.join(app.get('ROOT'), 'public'), { maxAge: '1d' }))
 
 // route
-app.use('/model.json', falcorMiddleware.dataSourceRoute(function(req, res) {
+app.use('/model.json', falcorMiddleware.dataSourceRoute((req, res) => {
 	return new ModelRouter(req.cookies.userId)
 }))
 
@@ -23,6 +23,4 @@ app.get('*', (req, res) => {
 
 
 // error handle last
-if ('production' !== app.get('ENV')) {
-	app.use(errorHandler())
-}
+app.use(errorHandler())

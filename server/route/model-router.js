@@ -1,6 +1,6 @@
 import Router from 'falcor-router'
 import jsonGraph from 'falcor-json-graph'
-import {githubService} from '../service/'
+import { githubService } from '../service/'
 
 const $ref = jsonGraph.ref
 const $atom = jsonGraph.atom
@@ -13,7 +13,7 @@ const BaseRouter = Router.createClass([{
 		const articles = await githubService.getArticles(url)
 		return {
 			path: ['articles'],
-			value: $atom(articles)
+			value: $atom(articles),
 		}
 	},
 }, {
@@ -23,7 +23,7 @@ const BaseRouter = Router.createClass([{
 		const articles = await githubService.getComment(url)
 		return {
 			path: ['articles'],
-			value: $atom(articles)
+			value: $atom(articles),
 		}
 	},
 }])

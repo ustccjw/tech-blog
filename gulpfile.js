@@ -1,11 +1,10 @@
-'use strict'
-
 const path = require('path')
 const gulp = require('gulp')
 const webpack = require('webpack')
 const del = require('del')
 const spawn = require('child_process').spawn
 const backendConfig = require('./webpack.config.backend')
+const frontendConfig = require('./webpack.config.frontend')
 
 const buildPath = backendConfig.output.path
 
@@ -13,24 +12,27 @@ gulp.task('clean', () => del([buildPath]))
 
 gulp.task('backend-watch', done => {
 	let firedDone = false
-	webpack(backendConfig).watch(100, (err, stats) => {
+	webpack(backendConfig).watch(null, (err, stats) => {
 		onBuild(err, stats)
-		done()
+		if (!firedDone) {
+			firedDone = true
+			done()
+		}
 	})
 })
 
 gulp.task('server-start', done => {
 	const entry = path.join(__dirname, 'build/backend')
 	const server = spawn('node', [entry])
-	server.stdout.on('data', data => {
+	server.stdout.on('data', data =>
 		process.stdout.write(data)
-	})
-	server.stderr.on('data', data => {
+	)
+	server.stderr.on('data', data =>
 		process.stderr.write(data)
-	})
-	server.on('exit', code => {
+	)
+	server.on('exit', code =>
 		console.log(`child process exited with code ${code}`)
-	})
+	)
 })
 
 gulp.task('watch', gulp.parallel('backend-watch'))
@@ -42,7 +44,7 @@ const outputOptions = {
 	cached: false,
 	cachedAssets: false,
 	colors: true,
-	exclude: ['node_modules', 'components'],
+	exclude: ['node_modules'],
 }
 
 function onBuild(err, stats) {

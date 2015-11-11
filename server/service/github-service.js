@@ -1,8 +1,8 @@
 import fetch from 'node-fetch'
 import queryString from 'query-string'
-import {checkStatus} from '../../util'
+import { checkStatus } from '../../util'
 
-export async function getArticles(url) {
+const getArticles = async url => {
 	const query = queryString.stringify({
 		state: 'open',
 		labels: 'blog',
@@ -22,11 +22,11 @@ export async function getArticles(url) {
 		author: {
 			name: article.user.login,
 			link: article.user.html_url,
-		}
+		},
 	}))
 }
 
-export async function getCommnet(url) {
+const getCommnet = async url => {
 	const response = await fetch(url)
 	const comment = await checkStatus(response)
 	return {
@@ -36,8 +36,8 @@ export async function getCommnet(url) {
 		author: {
 			name: comment.user.login,
 			link: comment.user.html_url,
-		}
+		},
 	}
 }
 
-export default {getArticles, getCommnet}
+export default { getArticles, getCommnet }

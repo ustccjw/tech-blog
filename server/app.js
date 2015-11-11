@@ -19,10 +19,10 @@ app.set('ROOT', path.join(__dirname, '../'))
 app.disable('etag')
 
 // logger
-if ('production' === app.get('ENV')) {
+if ('production' === app.get('env')) {
 	const logPath = path.join(app.get('ROOT'), 'log/access.log')
 	const accessLogStream = fs.createWriteStream(logPath, {flags: 'a'})
-	app.use(logger('combined', {stream: accessLogStream}))
+	app.use(logger('combined', { stream: accessLogStream }))
 } else {
 	app.use(logger('dev'))
 }
