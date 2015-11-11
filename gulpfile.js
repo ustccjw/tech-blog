@@ -1,3 +1,5 @@
+'use strict'
+
 const path = require('path')
 const gulp = require('gulp')
 const webpack = require('webpack')
@@ -11,11 +13,11 @@ const buildPath = backendConfig.output.path
 gulp.task('clean', () => del([buildPath]))
 
 gulp.task('backend-watch', done => {
-	let firedDone = false
+	let fireDone = false
 	webpack(backendConfig).watch(null, (err, stats) => {
 		onBuild(err, stats)
-		if (!firedDone) {
-			firedDone = true
+		if (!fireDone) {
+			fireDone = true
 			done()
 		}
 	})
