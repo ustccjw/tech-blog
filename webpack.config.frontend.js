@@ -7,6 +7,7 @@ const autoprefixer = require('autoprefixer')
 module.exports = {
 	entry: [
 		'webpack-hot-middleware/client',
+		'babel-core/polyfill',
 		'./client/index.jsx',
 	],
 	output: {

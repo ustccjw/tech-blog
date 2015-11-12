@@ -10,12 +10,12 @@ export default class App extends React.Component {
 	render() {
 		const { children } = this.props
 		return (
-			<div className="app">
+			<app>
 				<Header title="技术驱动博客" />
 				<div className="body">
 					{ children }
 				</div>
-			</div>
+			</app>
 		)
 	}
 }

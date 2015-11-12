@@ -18,9 +18,9 @@ export default class ArticleList extends React.Component {
 			)
 		}
 		return (
-			<div className="article-list">
+			<ideal-articlelist>
 				{ articleComponents }
-			</div>
+			</ideal-articlelist>
 		)
 	}
 }

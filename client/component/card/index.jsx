@@ -10,9 +10,9 @@ export default class Card extends React.Component {
 	render() {
 		const { article } = this.props
 		return (
-			<div className="card">
+			<ideal-card>
 				<Markdown source={ article.content } />
-			</div>
+			</ideal-card>
 		)
 	}
 }

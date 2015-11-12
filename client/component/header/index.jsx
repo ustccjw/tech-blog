@@ -10,10 +10,12 @@ export default class Header extends React.Component {
 	render() {
 		const { title, children } = this.props
 		return (
-			<header className="header">
-				<h1>{ title }</h1>
-				{ children }
-			</header>
+			<ideal-header>
+				<header>
+					<h1>{ title }</h1>
+					{ children }
+				</header>
+			</ideal-header>
 		)
 	}
 }
