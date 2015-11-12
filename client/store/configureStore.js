@@ -4,6 +4,7 @@ import { Model } from 'falcor'
 import { reduxReactRouter, routerStateReducer } from 'redux-router'
 import { createHistory } from 'history'
 import promiseMiddleware from 'redux-promise'
+import { warningMiddleware } from '../middleware'
 import * as reducers from '../reducer'
 import routes from '../route'
 
@@ -19,13 +20,17 @@ const model = new Model({
 let finalCreateStore = null
 if (process.env.NODE_ENV === 'development') {
 	const devTool = require('../dev-tool')
+	const { persistState } = require('redux-devtools')
 	finalCreateStore = compose(
-		applyMiddleware(promiseMiddleware, createFalcorMiddleware(model)),
+		applyMiddleware(promiseMiddleware, createFalcorMiddleware(model),
+			warningMiddleware),
 		reduxReactRouter({
 			routes,
 			createHistory,
 		}),
 		devTool.instrument(),
+		persistState(window.location.href.match(
+			/[?&]debug_session=([^&]+)\b/)),
 	)(createStore)
 } else {
 	finalCreateStore = compose(

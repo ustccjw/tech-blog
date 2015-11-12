@@ -1,3 +1,36 @@
 ideal-header {
 	display: block;
+	position: relative;
+	padding: 1px;
+	color: #fff;
+	font-family: "adelle-sans",sans-serif;
+	background: url(../../../public/intro-bg.png);
+	h1 {
+		max-width: 800px;
+		margin: 250px auto 2rem;
+		text-align: center;
+		font-size: 1.5rem;
+		font-weight: normal;
+	}
+	nav {
+		position: absolute;
+		top: 0;
+		left: 0;
+		ul {
+			display: flex;
+			list-style: none;
+			li {
+				margin-right: 20px;
+				a {
+					text-decoration: none;
+					transition: color .25s;
+					color: #fff;
+					&:hover {
+						color: orange;
+						text-decoration: underline;
+					}
+				}
+			}
+		}
+	}
 }

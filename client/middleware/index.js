@@ -1,0 +1,1 @@
+export warningMiddleware from './warning'

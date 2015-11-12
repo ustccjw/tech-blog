@@ -13,7 +13,7 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, 'public'),
 		filename: 'frontend.js',
-		publicPath: '/',
+		publicPath: 'http://127.0.0.1:3000/',
 	},
 	resolve: {
 		extensions: ['', '.jsx', '.js', '.scss', '.css'],
@@ -26,6 +26,9 @@ module.exports = {
 		}, {
 			test: /(\.scss|\.css)$/,
 			loader: 'style!css?sourceMap!postcss!sass?sourceMap',
+		}, {
+			test: /\.(png|jpg|jpeg)$/,
+			loader: 'url?limit=3072',
 		}],
 	},
 	postcss: [autoprefixer],

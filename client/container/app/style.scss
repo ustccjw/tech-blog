@@ -1,4 +1,11 @@
-app {
+ideal-app {
 	display: block;
-	box-sizing:  border-box;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	color: #272727;
+	font: 16px/1.6 Verdana, sans-serif;
 }
