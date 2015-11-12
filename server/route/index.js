@@ -9,6 +9,7 @@ import ModelRouter from './model-router'
 // public resource
 app.use(favicon(path.join(app.get('ROOT'), 'public/favicon.ico')))
 app.use(serveStatic(path.join(app.get('ROOT'), 'public'), { maxAge: '1d' }))
+app.use(serveStatic(path.join(app.get('ROOT'), 'dist'), { maxAge: '1d' }))
 
 // route
 app.use('/model.json', falcorMiddleware.dataSourceRoute((req, res) => {

@@ -1,16 +1,17 @@
 'use strict'
 
 const path = require('path')
+const spawn = require('child_process').spawn
 const gulp = require('gulp')
 const webpack = require('webpack')
 const del = require('del')
-const spawn = require('child_process').spawn
 const backendConfig = require('./webpack.config.backend')
 const frontendConfig = require('./webpack.config.frontend')
+const productionConfig = require('./webpack.config.production')
 
-const buildPath = backendConfig.output.path
-
-gulp.task('clean', () => del([buildPath]))
+gulp.task('clean-dev', () => del([backendConfig.output.path]))
+gulp.task('clean-build', () => del([productionConfig.backend.output.path,
+	productionConfig.frontend.output.path]))
 
 gulp.task('backend-watch', done => {
 	let fireDone = false
@@ -24,7 +25,7 @@ gulp.task('backend-watch', done => {
 })
 
 gulp.task('server-start', done => {
-	const entry = path.join(__dirname, 'build/backend')
+	const entry = path.join(__dirname, 'dev/backend')
 	const server = spawn('node', [entry])
 	server.stdout.on('data', data =>
 		process.stdout.write(data)
@@ -37,9 +38,27 @@ gulp.task('server-start', done => {
 	)
 })
 
-gulp.task('watch', gulp.parallel('backend-watch'))
+gulp.task('backend-build', done => {
+	webpack(productionConfig.backend).run((err, stats) => {
+		onBuild(err, stats)
+		done()
+	})
+})
 
-gulp.task('dev', gulp.series('clean', 'watch', 'server-start'))
+gulp.task('frontend-build', done => {
+	webpack(productionConfig.frontend).run((err, stats) => {
+		onBuild(err, stats)
+		done()
+	})
+})
+
+gulp.task('dev', gulp.series('clean-dev', 'backend-watch', 'server-start'))
+
+gulp.task('build', gulp.series('clean-build', 'backend-build',
+	'frontend-build'))
+
+gulp.task('deploy', done => {
+})
 
 
 const outputOptions = {

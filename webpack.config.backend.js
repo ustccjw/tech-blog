@@ -16,7 +16,7 @@ module.exports = {
 		'./server/server.js',
 	],
 	output: {
-		path: path.join(__dirname, 'build'),
+		path: path.join(__dirname, 'dev'),
 		filename: 'backend.js',
 	},
 	node: {

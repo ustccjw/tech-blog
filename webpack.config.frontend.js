@@ -11,7 +11,7 @@ module.exports = {
 		'./client/index.jsx',
 	],
 	output: {
-		path: path.join(__dirname, 'public'),
+		path: path.join(__dirname, 'dev'),
 		filename: 'frontend.js',
 		publicPath: 'http://127.0.0.1:3000/',
 	},

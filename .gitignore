@@ -1,4 +1,6 @@
+dev
 build
+dist
 node_modules
 log
 npm-debug.log
