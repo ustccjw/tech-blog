@@ -36,9 +36,6 @@ module.exports = {
 			raw: true,
 			entryOnly: false,
 		}),
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify('development'),
-		}),
 	],
 	externals: nodeModules,
 	devtool: 'sourcemap',

@@ -35,9 +35,6 @@ exports.backend = {
 			raw: true,
 			entryOnly: false,
 		}),
-		new webpack.DefinePlugin({
-			'process.env.NODE_ENV': JSON.stringify('production'),
-		}),
 	],
 	externals: nodeModules,
 	devtool: 'sourcemap',
