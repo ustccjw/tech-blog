@@ -19,7 +19,6 @@ const model = new Model({
 
 let finalCreateStore = null
 if (process.env.NODE_ENV === 'development') {
-	console.log('hahah')
 	const devTool = require('../dev-tool')
 	const { persistState } = require('redux-devtools')
 	finalCreateStore = compose(
