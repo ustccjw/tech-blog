@@ -1,3 +1,11 @@
 ideal-markdown {
 	display: block;
+	padding: 10px 20px 20px;
+	code {
+		display: block;
+		overflow: scroll;
+	}
+	img {
+		max-width: 100%;
+	}
 }

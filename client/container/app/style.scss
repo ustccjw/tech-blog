@@ -5,7 +5,13 @@ ideal-app {
 html, body {
 	margin: 0;
 	padding: 0;
-	box-sizing: border-box;
+}
+
+body {
 	color: #272727;
 	font: 16px/1.6 Verdana, sans-serif;
+}
+
+* {
+	box-sizing: border-box;
 }

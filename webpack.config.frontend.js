@@ -4,6 +4,9 @@ const path = require('path')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 
+// const IP = '127.0.0.1'
+const IP = '192.168.1.5'
+
 module.exports = {
 	entry: [
 		'webpack-hot-middleware/client',
@@ -13,7 +16,7 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, 'dev'),
 		filename: 'frontend.js',
-		publicPath: 'http://127.0.0.1:3000/',
+		publicPath: `http://${IP}:3000/`,
 	},
 	resolve: {
 		extensions: ['', '.jsx', '.js', '.scss', '.css'],

@@ -3,10 +3,10 @@ ideal-card {
 	position: relative;
 	width: 100%;
 	height: 400px;
-	padding: 10px 30px 30px;
+	padding: 10px;
 	border: 1px solid #ccc;
 	& > ideal-markdown {
-		height: 350px;
+		height: 320px;
 		overflow: hidden;
 	}
 	& > a {
