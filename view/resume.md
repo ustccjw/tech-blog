@@ -35,7 +35,7 @@
 
    * 在组件化中 CSS 的组织方式，具体的说，就是在 React 组件中，如何组织样式：CSSinJS/css-modules，实际上就是如何做到 CSS 模块化；
    * React 组件中，stateless component 如何权衡，过度的stateless 可能会造成父子组件之间过度耦合。
-   * 关于 React 组件中 CSS 组织的思考：[https://github.com/ustccjw/Blog/issues/13][1]
+   * 关于 React 组件中 CSS 组织的思考：[React 组件中如何组织 CSS][1]
 
 ## 实习和工作情况
 

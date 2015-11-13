@@ -1,5 +1,5 @@
 import React from 'react'
-import Markdown from 'react-remarkable'
+import Markdown from '../markdown'
 import './style'
 
 export default class About extends React.Component {
@@ -11,7 +11,7 @@ export default class About extends React.Component {
 		const { resume } = this.props
 		return (
 			<ideal-about>
-				{ resume ? <Markdown source={ resume } /> : null }
+				{ resume ? <Markdown content={ resume } /> : null }
 			</ideal-about>
 		)
 	}
