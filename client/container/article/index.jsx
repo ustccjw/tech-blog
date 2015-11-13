@@ -16,7 +16,7 @@ export default class ArticleContainer extends React.Component {
 	}
 
 	componentWillMount() {
-		const { dispatch, articles } = this.props
+		const { dispatch } = this.props
 		dispatch(retrievePath('articles'))
 	}
 

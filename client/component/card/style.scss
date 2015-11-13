@@ -5,7 +5,7 @@ ideal-card {
 	height: 400px;
 	padding: 10px 30px 30px;
 	border: 1px solid #ccc;
-	& > div {
+	& > ideal-markdown {
 		height: 350px;
 		overflow: hidden;
 	}

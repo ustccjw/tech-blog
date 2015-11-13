@@ -1,6 +1,6 @@
 import React from 'react'
-import './style'
 import Card from '../card'
+import './style'
 
 export default class ArticleList extends React.Component {
 	static propTypes = {

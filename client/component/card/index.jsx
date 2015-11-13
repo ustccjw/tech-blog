@@ -1,7 +1,7 @@
 import React from 'react'
-import './style'
 import { Link } from 'react-router'
-import Markdown from 'react-remarkable'
+import Markdown from '../markdown'
+import './style'
 
 export default class Card extends React.Component {
 	static propTypes = {
@@ -12,7 +12,7 @@ export default class Card extends React.Component {
 		const { article } = this.props
 		return (
 			<ideal-card>
-				<Markdown source={ article.content } />
+				<Markdown content={ article.content } />
 				<Link to={ `/articles/${article.number}/` }>View More</Link>
 			</ideal-card>
 		)

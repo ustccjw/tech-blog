@@ -1,5 +1,8 @@
+import path from 'path'
+import fs from 'mz/fs'
 import Router from 'falcor-router'
 import jsonGraph from 'falcor-json-graph'
+import app from '../app'
 import { githubService } from '../service/'
 
 const $ref = jsonGraph.ref
@@ -24,6 +27,16 @@ const BaseRouter = Router.createClass([{
 		return {
 			path: ['articles'],
 			value: $atom(articles),
+		}
+	},
+}, {
+	route: 'resume',
+	get: async pathSet => {
+		const resume = await fs.readFile(path.join(app.get('ROOT'),
+			'view/resume.md'))
+		return {
+			path: ['resume'],
+			value: resume.toString(),
 		}
 	},
 }])

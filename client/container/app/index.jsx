@@ -1,6 +1,6 @@
 import React from 'react'
-import './style'
 import Header from '../../component/header'
+import './style'
 
 export default class App extends React.Component {
 	static propTypes = {
@@ -15,11 +15,14 @@ export default class App extends React.Component {
 				label: 'POSTS',
 				value: '/articles/',
 			}, {
+				label: 'ABOUT',
+				value: '/about/',
+			}, {
 				label: 'GITHUB',
 				value: 'https://github.com/ustccjw',
 			}, {
-				label: 'ABOUT',
-				value: '/about/',
+				label: 'SOURCE',
+				value: 'https://github.com/ustccjw/tech-blog',
 			}],
 		}
 		return (
