@@ -8,7 +8,8 @@
     "lint": "eslint ./ --ext .js,.jsx",
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "NODE_ENV=production gulp build",
-    "deploy": "NODE_ENV=production pm2 start build/backend.js -i 0 --name tech-blog"
+    "serve": "NODE_ENV=production pm2 start build/backend.js -f -i 0 --name tech-blog",
+    "deploy": "npm run build && npm run serve"
   },
   "repository": {
     "type": "git",

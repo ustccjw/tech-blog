@@ -16,7 +16,7 @@ export default app
 
 app.set('PORT', process.env.PORT || 3000)
 app.set('ROOT', path.join(__dirname, '../'))
-app.disable('etag')
+app.set('etag', false)
 
 // logger
 if ('production' === app.get('env')) {
