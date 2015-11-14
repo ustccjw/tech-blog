@@ -3,7 +3,7 @@ export default function warningMiddleware({ dispatch, getState }) {
 		if (action.error) {
 			const error = typeof action.error === 'object' ? action.error :
 				action.payload
-			console.log(error.message)
+			alert(error.message)
 		}
 		return next(action)
 	}
