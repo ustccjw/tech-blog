@@ -17,11 +17,12 @@ export default app
 app.set('PORT', process.env.PORT || 3000)
 app.set('ROOT', path.join(__dirname, '../'))
 app.set('etag', false)
+app.enable('trust proxy')
 
 // logger
 if ('production' === app.get('env')) {
 	const logPath = path.join(app.get('ROOT'), 'log/access.log')
-	const accessLogStream = fs.createWriteStream(logPath, {flags: 'a'})
+	const accessLogStream = fs.createWriteStream(logPath, { flags: 'a' })
 	app.use(logger('combined', { stream: accessLogStream }))
 } else {
 	app.use(logger('dev'))

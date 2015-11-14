@@ -24,4 +24,6 @@ app.get('*', (req, res) => {
 
 
 // error handle last
-app.use(errorHandler())
+if (process.env.NODE_ENV !== 'production') {
+	app.use(errorHandler())
+}
