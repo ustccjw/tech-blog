@@ -1,5 +1,6 @@
 ideal-markdown {
 	display: block;
+	height: 100%;
 	padding: 10px 20px 20px;
 	code {
 		display: block;
@@ -7,5 +8,13 @@ ideal-markdown {
 	}
 	img {
 		max-width: 100%;
+	}
+	& > div {
+		height: 100%;
+	}
+	& > div > span {
+		display: block;
+		height: 100%;
+		overflow: hidden;
 	}
 }

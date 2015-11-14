@@ -27,7 +27,10 @@ export default class Markdown extends React.Component {
 				return ''
 			},
 		}
-		const props = { source: content, options }
+		const props = {
+			source: content,
+			options,
+		}
 		return (
 			<ideal-markdown>
 				<Remarkable {...props} />

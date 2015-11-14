@@ -5,9 +5,9 @@ ideal-card {
 	height: 400px;
 	padding: 10px;
 	border: 1px solid #ccc;
+	border-radius: 15px;
 	& > ideal-markdown {
 		height: 320px;
-		overflow: hidden;
 	}
 	& > a {
 		position: absolute;
