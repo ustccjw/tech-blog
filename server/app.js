@@ -18,7 +18,6 @@ app.set('PORT', process.env.PORT || 3000)
 app.set('ROOT', path.join(__dirname, '../'))
 app.set('etag', false)
 app.enable('trust proxy')
-app.set('trust proxy', 'loopback')
 
 // logger
 if ('production' === app.get('env')) {
