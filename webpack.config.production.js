@@ -66,6 +66,9 @@ exports.frontend = {
 			loader: 'url?limit=3072',
 		}],
 	},
+	externals: {
+		'highlight.js': 'hljs',
+	},
 	postcss: [autoprefixer],
 	plugins: [
 		new webpack.optimize.OccurenceOrderPlugin(),
