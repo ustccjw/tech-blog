@@ -4,36 +4,28 @@ import { retrievePath } from 'redux-falcor'
 import Article from '../../component/article'
 
 @connect(state => ({
-	number: state.router.params.number,
-	article: state.article,
-	articles: state.entities.articles || null,
+	number: +state.router.params.number,
+	articleState: state.article,
+	articleByNumber: state.entities.articleByNumber || null,
 }))
 export default class ArticleContainer extends React.Component {
 	static propTypes = {
-		article: React.PropTypes.object,
-		articles: React.PropTypes.array,
+		number: React.PropTypes.number,
+		articleState: React.PropTypes.object,
+		articleByNumber: React.PropTypes.object,
 		dispatch: React.PropTypes.func,
 	}
 
 	componentWillMount() {
-		const { dispatch } = this.props
-		dispatch(retrievePath('articles'))
+		const { dispatch, number } = this.props
+		dispatch(retrievePath(['articleByNumber', number]))
 	}
 
 	render() {
-		const { articles, number } = this.props
-		let article = null
-		if (articles) {
-			articles.every(obj => {
-				if (+obj.number === +number) {
-					article = obj
-					return false
-				}
-				return true
-			})
-		}
+		const { articleByNumber, number } = this.props
+		console.log(articleByNumber)
 		const props = {
-			article,
+			article: articleByNumber && articleByNumber[number],
 			dispatch: this.dispatch,
 		}
 		return <Article { ...props } />

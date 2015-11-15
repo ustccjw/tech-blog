@@ -13,12 +13,30 @@ const BaseRouter = Router.createClass([{
 	get: async pathSet => {
 		const { from, to } = pathSet.indexRanges[0]
 		const articles = await Article.get(from, to)
-		return articles.
+		const result = []
+		articles.
 			map(article => JSON.parse(article)).
-			map((article, index) => ({
-				path: ['articles', index],
-				value: $atom(article),
-			}))
+			forEach((article, index) => {
+				result.push({
+					path: ['articles', index],
+					value: $atom(article),
+				})
+				result.push({
+					path: ['articleByNumber', article.number],
+					value: $ref(['articles', index]),
+				})
+			})
+		return result
+	},
+}, {
+	route: 'articleByNumber[{integers:numbers}]',
+	get: async pathSet => {
+		const number = pathSet.numbers[0]
+		const article = await Article.getByNumber(number)
+		return {
+			path: ['articleByNumber', number],
+			value: $atom(JSON.parse(article[0])),
+		}
 	},
 }, {
 	route: 'resume',

@@ -4,7 +4,6 @@ import './style'
 
 export default class ArticleList extends React.Component {
 	static propTypes = {
-		articleList: React.PropTypes.object,
 		articles: React.PropTypes.array,
 		dispatch: React.PropTypes.func,
 	}
