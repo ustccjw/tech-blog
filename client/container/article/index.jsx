@@ -23,7 +23,6 @@ export default class ArticleContainer extends React.Component {
 
 	render() {
 		const { articleByNumber, number } = this.props
-		console.log(articleByNumber)
 		const props = {
 			article: articleByNumber && articleByNumber[number],
 			dispatch: this.dispatch,
