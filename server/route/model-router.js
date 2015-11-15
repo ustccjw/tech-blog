@@ -1,42 +1,32 @@
 import path from 'path'
-import fs from 'mz/fs'
 import Router from 'falcor-router'
 import jsonGraph from 'falcor-json-graph'
 import app from '../app'
-import { githubService } from '../service/'
+import { Article, Resume } from '../model'
 
 const $ref = jsonGraph.ref
 const $atom = jsonGraph.atom
 const $error = jsonGraph.error
 
 const BaseRouter = Router.createClass([{
-	route: 'articles',
+	route: 'articles[{ranges:indexRanges}]',
 	get: async pathSet => {
-		const url = 'https://api.github.com/repos/ustccjw/Blog/issues'
-		const articles = await githubService.getArticles(url)
-		return {
-			path: ['articles'],
-			value: $atom(articles),
-		}
-	},
-}, {
-	route: 'comment',
-	get: async pathSet => {
-		const url = 'https://api.github.com/repos/ustccjw/Blog/issues'
-		const articles = await githubService.getComment(url)
-		return {
-			path: ['articles'],
-			value: $atom(articles),
-		}
+		const { from, to } = pathSet.indexRanges[0]
+		const articles = await Article.get(from, to)
+		return articles.
+			map(article => JSON.parse(article)).
+			map((article, index) => ({
+				path: ['articles', index],
+				value: $atom(article),
+			}))
 	},
 }, {
 	route: 'resume',
 	get: async pathSet => {
-		const resume = await fs.readFile(path.join(app.get('ROOT'),
-			'view/resume.md'))
+		const resume = await Resume.get()
 		return {
 			path: ['resume'],
-			value: resume.toString(),
+			value: resume,
 		}
 	},
 }])

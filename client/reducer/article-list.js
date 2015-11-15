@@ -3,10 +3,10 @@ import { handleActions } from 'redux-actions'
 import { AL_SETINDEX } from '../constant/action-type'
 
 const initialState = fromJS({
-	index: 1,
+	page: 1,
 })
 
 export default handleActions({
 	[AL_SETINDEX]: (state, action) =>
-		state.set(index, fromJS(action.payload)),
+		state.set('page', fromJS(action.payload)),
 }, initialState)

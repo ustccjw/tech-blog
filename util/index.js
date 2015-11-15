@@ -5,3 +5,5 @@ export const checkStatus = async response => {
 		throw new Error(response.statusText)
 	}
 }
+
+export const object2Array = obj => Object.keys(obj).map(key => obj[key])

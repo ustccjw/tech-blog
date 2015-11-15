@@ -2,24 +2,37 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { retrievePath } from 'redux-falcor'
 import ArticleList from '../../component/article-list'
+import { object2Array } from '../../../util'
 
 @connect(state => ({
-	article: state.article,
+	articleList: state.articleList,
 	articles: state.entities.articles || null,
 }))
 export default class ArticleListContainer extends React.Component {
 	static propTypes = {
-		article: React.PropTypes.object,
-		articles: React.PropTypes.array,
+		articleList: React.PropTypes.object,
+		articles: React.PropTypes.object,
 		dispatch: React.PropTypes.func,
 	}
 
 	componentWillMount() {
-		const { dispatch } = this.props
-		dispatch(retrievePath('articles'))
+		const { dispatch, articleList } = this.props
+		const { page } = articleList.toJS()
+		const from = (page - 1) * 15
+		const to = from + 15
+		dispatch(retrievePath(['articles', { from, to }]))
 	}
 
 	render() {
-		return <ArticleList { ...this.props } />
+		const { articleList, articles, dispatch } = this.props
+		const { page } = articleList.toJS()
+		const from = (page - 1) * 15
+		const to = from + 15
+		const props = {
+			articleList,
+			dispatch,
+			articles: articles && object2Array(articles).slice(from, to),
+		}
+		return <ArticleList { ...props } />
 	}
 }

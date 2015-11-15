@@ -39,6 +39,7 @@
     "falcor-router": "^0.2.11",
     "history": "^1.13.0",
     "immutable": "^3.7.5",
+    "ioredis": "^1.10.0",
     "method-override": "^2.3.5",
     "morgan": "^1.6.1",
     "multer": "^1.1.0",

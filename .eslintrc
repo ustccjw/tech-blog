@@ -50,7 +50,7 @@
     constructor-super: 2
     no-this-before-super: 2
 
-    generator-star-spacing: 2
+    # generator-star-spacing: 2
 
 
     # Extra
