@@ -19,6 +19,8 @@ app.set('ROOT', path.join(__dirname, '../'))
 app.set('etag', false)
 app.enable('trust proxy')
 
+logger.token('date', () => new Date().toString())
+
 // logger
 if ('production' === app.get('env')) {
 	const logPath = path.join(app.get('ROOT'), 'log/access.log')
