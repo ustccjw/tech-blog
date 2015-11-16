@@ -5,7 +5,7 @@ import ArticleList from '../../component/article-list'
 import { object2Array } from '../../../util'
 
 @connect(state => ({
-	articleListState: state.articleList,
+	articleListState: state.articleList.toJS(),
 	articles: state.entities.articles || null,
 }))
 export default class ArticleListContainer extends React.Component {
@@ -17,7 +17,7 @@ export default class ArticleListContainer extends React.Component {
 
 	componentWillMount() {
 		const { dispatch, articleListState } = this.props
-		const { page } = articleListState.toJS()
+		const { page } = articleListState
 		const from = (page - 1) * 15
 		const to = from + 15
 		dispatch(retrievePath(['articles', { from, to }]))
@@ -25,7 +25,7 @@ export default class ArticleListContainer extends React.Component {
 
 	render() {
 		const { articleListState, articles, dispatch } = this.props
-		const { page } = articleListState.toJS()
+		const { page } = articleListState
 		const from = (page - 1) * 15
 		const to = from + 15
 		const props = {

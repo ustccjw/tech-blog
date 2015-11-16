@@ -5,7 +5,7 @@ import Article from '../../component/article'
 
 @connect(state => ({
 	number: +state.router.params.number,
-	articleState: state.article,
+	articleState: state.article.toJS(),
 	articleByNumber: state.entities.articleByNumber || null,
 }))
 export default class ArticleContainer extends React.Component {

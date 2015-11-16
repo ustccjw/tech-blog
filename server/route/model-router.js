@@ -1,7 +1,5 @@
-import path from 'path'
 import Router from 'falcor-router'
 import jsonGraph from 'falcor-json-graph'
-import app from '../app'
 import { Article, Resume } from '../model'
 
 const $ref = jsonGraph.ref
