@@ -31,7 +31,8 @@ export default class ArticleListContainer extends React.Component {
 		const props = {
 			articleListState,
 			dispatch,
-			articles: articles && object2Array(articles).slice(from, to),
+			articles: articles && object2Array(articles).reverse().
+				slice(from, to),
 		}
 		return <ArticleList { ...props } />
 	}
