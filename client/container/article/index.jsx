@@ -18,7 +18,7 @@ export default class ArticleContainer extends React.Component {
 
 	componentWillMount() {
 		const { dispatch, number } = this.props
-		dispatch(retrievePath(['articleByNumber', number]))
+		dispatch(retrievePath(['articleByNumber', number, 'content']))
 	}
 
 	render() {

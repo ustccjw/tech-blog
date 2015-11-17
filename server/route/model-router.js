@@ -17,11 +17,11 @@ const BaseRouter = Router.createClass([{
 			forEach((article, index) => {
 				result.push({
 					path: ['articles', index],
-					value: $atom(article),
+					value: $ref(['articleByNumber', article.number]),
 				})
 				result.push({
 					path: ['articleByNumber', article.number],
-					value: $ref(['articles', index]),
+					value: article,
 				})
 			})
 		return result

@@ -20,7 +20,8 @@ export default class ArticleListContainer extends React.Component {
 		const { page } = articleListState
 		const from = (page - 1) * 15
 		const to = from + 15
-		dispatch(retrievePath(['articles', { from, to }]))
+		dispatch(retrievePath(['articles', { from, to },
+			['number', 'content']]))
 	}
 
 	render() {
