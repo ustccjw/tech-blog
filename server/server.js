@@ -1,9 +1,9 @@
 import http from 'http'
-import app from './'
+import tempApp from './'
 
-let hotApp = app
+let app = tempApp
 const server = http.createServer()
-server.on('request', hotApp)
+server.on('request', app)
 server.listen(app.get('PORT'), () =>
 	console.log('Express server listening on port ' + app.get('PORT')))
 
@@ -11,13 +11,15 @@ export default server
 
 if (module.hot) {
 	module.hot.accept('./', () => {
+		let hotApp = null
 		try {
 			hotApp = require('./')
 		} catch (error) {
 			console.error(error.stack)
 			return
 		}
-		server.removeListener('request', hotApp)
-		server.on('request', hotApp)
+		server.removeListener('request', app)
+		app = hotApp
+		server.on('request', app)
 	})
 }
