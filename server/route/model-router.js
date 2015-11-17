@@ -1,39 +1,43 @@
 import Router from 'falcor-router'
 import jsonGraph from 'falcor-json-graph'
 import { Article, Resume } from '../model'
+import { getObjectByKeys } from '../../util'
 
 const $ref = jsonGraph.ref
 const $atom = jsonGraph.atom
 const $error = jsonGraph.error
 
 const BaseRouter = Router.createClass([{
-	route: 'articles[{ranges:indexRanges}]',
+	route: 'articles[{ranges:indexRanges}][{keys:props}]',
 	get: async pathSet => {
-		const { from, to } = pathSet.indexRanges[0]
-		const articles = await Article.get(from, to)
 		const result = []
-		articles.
-			map(article => JSON.parse(article)).
-			forEach((article, index) => {
-				result.push({
-					path: ['articles', index],
-					value: $ref(['articleByNumber', article.number]),
-				})
-				result.push({
-					path: ['articleByNumber', article.number],
-					value: article,
-				})
-			})
+		const tasks = pathSet.indexRanges.map(({from, to}) => {
+			return Article.get(from, to).
+				then(articles => articles.
+					map(article => JSON.parse(article)).
+					forEach((article, index) => {
+						result.push({
+							path: ['articleByNumber', article.number],
+							value: getObjectByKeys(article, pathSet.props),
+						})
+						result.push({
+							path: ['articles', index],
+							value: $ref(['articleByNumber', article.number]),
+						})
+					}))
+		})
+		await* tasks
 		return result
 	},
 }, {
-	route: 'articleByNumber[{integers:numbers}]',
+	route: 'articleByNumber[{integers:numbers}][{keys:props}]',
 	get: async pathSet => {
 		const number = pathSet.numbers[0]
-		const article = await Article.getByNumber(number)
+		const articles = await Article.getByNumber(number)
+		const article = JSON.parse(articles[0])
 		return {
 			path: ['articleByNumber', number],
-			value: $atom(JSON.parse(article[0])),
+			value: getObjectByKeys(article, pathSet.props),
 		}
 	},
 }, {

@@ -7,3 +7,9 @@ export const checkStatus = async response => {
 }
 
 export const object2Array = obj => Object.keys(obj).map(key => obj[key])
+
+export const getObjectByKeys = (obj, keys) => {
+	const res = {}
+	keys.forEach(key => res[key] = obj[key])
+	return res
+}
