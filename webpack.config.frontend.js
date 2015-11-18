@@ -35,6 +35,9 @@ module.exports = {
 		}],
 	},
 	externals: {
+		'react': 'React',
+		'react-dom': 'ReactDOM',
+		'falcor': 'falcor',
 		'highlight.js': 'hljs',
 	},
 	postcss: [autoprefixer],

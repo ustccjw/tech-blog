@@ -1,6 +1,6 @@
 import { combineReducers, applyMiddleware, createStore, compose } from 'redux'
 import { createFalcorMiddleware, falcorReducer } from 'redux-falcor'
-import { Model } from 'falcor'
+import falcor from 'falcor'
 import { reduxReactRouter, routerStateReducer } from 'redux-router'
 import { createHistory } from 'history'
 import promiseMiddleware from 'redux-promise'
@@ -13,7 +13,7 @@ const reducer = combineReducers({
 	entities: falcorReducer,
 	router: routerStateReducer,
 })
-const model = new Model({
+const model = new falcor.Model({
 	source: new falcor.HttpDataSource('/model.json'),
 })
 
