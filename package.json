@@ -33,7 +33,6 @@
     "errorhandler": "^1.4.2",
     "express": "^4.13.3",
     "express-session": "^1.12.1",
-    "falcor": "^0.1.14",
     "falcor-express": "^0.1.2",
     "falcor-json-graph": "^1.1.7",
     "falcor-router": "^0.2.11",
