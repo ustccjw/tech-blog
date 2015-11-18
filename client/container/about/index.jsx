@@ -18,8 +18,8 @@ export default class AboutContainer extends React.Component {
 	}
 
 	render() {
-		const { resume, dispatch } = this.props
-		const props = { resume, dispatch }
+		const { resume } = this.props
+		const props = { resume }
 		return (
 			<About {...props} />
 		)

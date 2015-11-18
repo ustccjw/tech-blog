@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { retrievePath } from 'redux-falcor'
 import ArticleList from '../../component/article-list'
 import { object2Array } from '../../../util'
+import { PAGE_SIZE } from '../../constant/config'
 
 @connect(state => ({
 	articleListState: state.articleList.toJS(),
@@ -18,20 +19,19 @@ export default class ArticleListContainer extends React.Component {
 	componentWillMount() {
 		const { dispatch, articleListState } = this.props
 		const { page } = articleListState
-		const from = (page - 1) * 15
-		const to = from + 15
+		const from = (page - 1) * PAGE_SIZE
+		const to = from + PAGE_SIZE
 		dispatch(retrievePath(['articles', { from, to },
 			['number', 'content']]))
 	}
 
 	render() {
-		const { articleListState, articles, dispatch } = this.props
+		const { articleListState, articles } = this.props
 		const { page } = articleListState
-		const from = (page - 1) * 15
-		const to = from + 15
+		const from = (page - 1) * PAGE_SIZE
+		const to = from + PAGE_SIZE
 		const props = {
 			articleListState,
-			dispatch,
 			articles: articles && object2Array(articles).reverse().
 				slice(from, to),
 		}

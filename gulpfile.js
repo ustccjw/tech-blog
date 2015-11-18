@@ -57,10 +57,6 @@ gulp.task('dev', gulp.series('clean-dev', 'backend-watch', 'server-start'))
 gulp.task('build', gulp.series('clean-build', 'backend-build',
 	'frontend-build'))
 
-gulp.task('deploy', done => {
-})
-
-
 const outputOptions = {
 	cached: false,
 	cachedAssets: false,
