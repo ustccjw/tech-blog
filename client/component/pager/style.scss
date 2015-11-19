@@ -1,0 +1,27 @@
+ideal-pager {
+	display: block;
+	max-width: 800px;
+	margin: 0 auto;
+	padding: 2rem 0;
+	overflow: auto;
+	& > ul {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		li {
+
+			float: left;
+			&:nth-child(2) {
+				float: right;
+			}
+		}
+		a {
+			padding: 5px 14px;
+			border: 1px solid #ddd;
+			border-radius: 15px;
+			text-decoration: none;
+			color: #337ab7;
+			background-color: #fff;
+		}
+	}
+}

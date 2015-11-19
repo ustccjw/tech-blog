@@ -1,1 +1,1 @@
-export const AL_SETINDEX = 'AL_SETINDEX'
+export const AL_SETPAGE = 'AL_SETPAGE'

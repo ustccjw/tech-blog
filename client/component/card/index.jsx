@@ -5,7 +5,7 @@ import './style'
 
 export default class Card extends React.Component {
 	static propTypes = {
-		article: React.PropTypes.object,
+		article: React.PropTypes.object.isRequired,
 	}
 
 	render() {

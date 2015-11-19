@@ -24,6 +24,6 @@ export default class ArticleContainer extends React.Component {
 		const props = {
 			article: articleByNumber && articleByNumber[number],
 		}
-		return <Article { ...props } />
+		return props.article ? <Article { ...props } /> : null
 	}
 }

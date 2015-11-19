@@ -3,33 +3,35 @@ import Remarkable from 'react-remarkable'
 import hljs from 'highlight.js'
 import './style'
 
+const CONFIG = {
+	// html: true,
+	xhtmlOut: true,
+	linkify: true,
+	typographer: true,
+	highlight: (str, lang) => {
+		if (lang && hljs.getLanguage(lang)) {
+			try {
+				return hljs.highlight(lang, str).value
+			} catch (err) {}
+		}
+		try {
+			return hljs.highlightAuto(str).value
+		} catch (err) {}
+		return ''
+	},
+}
+
 export default class Markdown extends React.Component {
 	static propTypes = {
-		content: React.PropTypes.string,
+		content: React.PropTypes.string.isRequired,
+		options: React.PropTypes.object,
 	}
 
 	render() {
-		const { content } = this.props
-		const options = {
-			// html: true,
-			xhtmlOut: true,
-			linkify: true,
-			typographer: true,
-			highlight: (str, lang) => {
-				if (lang && hljs.getLanguage(lang)) {
-					try {
-						return hljs.highlight(lang, str).value
-					} catch (err) {}
-				}
-				try {
-					return hljs.highlightAuto(str).value
-				} catch (err) {}
-				return ''
-			},
-		}
+		const { content, options } = this.props
 		const props = {
 			source: content,
-			options,
+			options: { ...CONFIG, ...options }
 		}
 		return (
 			<ideal-markdown>

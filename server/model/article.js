@@ -7,7 +7,7 @@ export default class Article {
 	}
 
 	static getByNumber(number) {
-		return redis.zrangebyscore('articles', number, number)
+		return redis.zrangebyscore('articles', -number, -number)
 	}
 
 	static async init() {
@@ -15,7 +15,7 @@ export default class Article {
 		const url = 'https://api.github.com/repos/ustccjw/Blog/issues'
 		const articles = await githubService.getArticles(url)
 		articles.forEach(article =>
-			redis.zadd('articles', article.number, JSON.stringify(article))
+			redis.zadd('articles', -article.number, JSON.stringify(article))
 		)
 	}
 }

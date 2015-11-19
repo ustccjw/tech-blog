@@ -6,35 +6,47 @@ import { object2Array } from '../../../util'
 import { PAGE_SIZE } from '../../constant/config'
 
 @connect(state => ({
-	articleListState: state.articleList.toJS(),
+	state: state.articleList.toJS(),
 	articles: state.entities.articles || null,
 }))
 export default class ArticleListContainer extends React.Component {
 	static propTypes = {
-		articleListState: React.PropTypes.object,
+		state: React.PropTypes.object,
 		articles: React.PropTypes.object,
 		dispatch: React.PropTypes.func,
 	}
 
 	componentWillMount() {
-		const { dispatch, articleListState } = this.props
-		const { page } = articleListState
+		const { dispatch, state } = this.props
+		const { page } = state
 		const from = (page - 1) * PAGE_SIZE
-		const to = from + PAGE_SIZE
+		const to = from + PAGE_SIZE - 1
 		dispatch(retrievePath(['articles', { from, to },
 			['number', 'content']]))
 	}
 
-	render() {
-		const { articleListState, articles } = this.props
-		const { page } = articleListState
-		const from = (page - 1) * PAGE_SIZE
-		const to = from + PAGE_SIZE
-		const props = {
-			articleListState,
-			articles: articles && object2Array(articles).reverse().
-				slice(from, to),
+	componentWillReceiveProps(nextProps) {
+		if (this.props.state.page !== nextProps.state.page ) {
+			const { dispatch, state } = nextProps
+			const { page } = state
+			const from = (page - 1) * PAGE_SIZE
+			const to = from + PAGE_SIZE - 1
+			dispatch(retrievePath(['articles', { from, to },
+				['number', 'content']]))
 		}
-		return <ArticleList { ...props } />
+	}
+
+	render() {
+		const { state, articles, dispatch } = this.props
+		const { page } = state
+		const from = (page - 1) * PAGE_SIZE
+		const to = from + PAGE_SIZE - 1
+		const props = {
+			...state,
+			dispatch,
+			articles: articles && object2Array(articles).slice(from, to + 1),
+		}
+		return props.articles && props.articles.length ?
+			<ArticleList { ...props } /> : null
 	}
 }

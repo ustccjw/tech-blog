@@ -4,8 +4,8 @@ import './style'
 
 export default class Header extends React.Component {
 	static propTypes = {
-		title: React.PropTypes.string,
-		links: React.PropTypes.array,
+		title: React.PropTypes.string.isRequired,
+		links: React.PropTypes.array.isRequired,
 	}
 
 	render() {
