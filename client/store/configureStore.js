@@ -3,6 +3,7 @@ import { createFalcorMiddleware, falcorReducer } from 'redux-falcor'
 import falcor from 'falcor'
 import { reduxReactRouter, routerStateReducer } from 'redux-router'
 import { createHistory } from 'history'
+import useScroll from 'scroll-behavior/lib/useStandardScroll'
 import promiseMiddleware from 'redux-promise'
 import { warningMiddleware } from '../middleware'
 import * as reducers from '../reducer'
@@ -26,7 +27,7 @@ if (process.env.NODE_ENV === 'development') {
 			warningMiddleware),
 		reduxReactRouter({
 			routes,
-			createHistory,
+			createHistory: useScroll(createHistory),
 		}),
 		devTool.instrument(),
 		persistState(window.location.href.match(

@@ -26,7 +26,7 @@ export default class ArticleListContainer extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (this.props.state.page !== nextProps.state.page ) {
+		if (this.props.state.page !== nextProps.state.page) {
 			const { dispatch, state } = nextProps
 			const { page } = state
 			const from = (page - 1) * PAGE_SIZE
