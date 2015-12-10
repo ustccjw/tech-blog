@@ -6,7 +6,7 @@ import AsyncProps from 'async-props'
 import routes from './route'
 
 const history = useScroll(createHistory)()
-const loading = <div>Loadiomng...</div>
+const loading = <div>Loading...</div>
 
 export default class Root extends React.Component {
 	render() {
