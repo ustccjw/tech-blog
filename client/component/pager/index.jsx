@@ -13,7 +13,7 @@ export default class Pager extends React.Component {
 		title: {
 			prev: '上一页',
 			next: '下一页',
-		}
+		},
 	}
 
 	render() {

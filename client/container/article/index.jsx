@@ -22,13 +22,13 @@ export default class ArticleContainer extends React.Component {
 	}
 
 	static childContextTypes = {
-		reload: React.PropTypes.func
+		reload: React.PropTypes.func,
 	}
 
 	getChildContext() {
 		const { reloadAsyncProps } = this.props
 		return {
-			reload: () => reloadAsyncProps()
+			reload: () => reloadAsyncProps(),
 		}
 	}
 

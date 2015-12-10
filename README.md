@@ -3,10 +3,8 @@
 explore and practice
 
 * express
-* falcor
+* falcor as model(dataModel and uiModel)
 * react
-* redux
-* redux-router
-* redux-devTools
 * webpack with gulp
 * hot loader in backend and frontend
+* async props on route component
