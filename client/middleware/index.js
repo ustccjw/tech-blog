@@ -1,1 +1,0 @@
-export warningMiddleware from './warning'

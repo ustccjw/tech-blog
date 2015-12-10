@@ -1,52 +1,52 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { retrievePath } from 'redux-falcor'
 import ArticleList from '../../component/article-list'
+import { DataModel, UiModel } from '../../model'
 import { object2Array } from '../../../util'
-import { PAGE_SIZE } from '../../constant/config'
+import { PAGE_SIZE } from '../../config'
 
-@connect(state => ({
-	state: state.articleList.toJS(),
-	articles: state.entities.articles || null,
-}))
 export default class ArticleListContainer extends React.Component {
 	static propTypes = {
-		state: React.PropTypes.object,
-		articles: React.PropTypes.object,
-		dispatch: React.PropTypes.func,
+		page: React.PropTypes.number.isRequired,
+		articles: React.PropTypes.object.isRequired,
+		totalPages: React.PropTypes.number.isRequired,
 	}
 
-	componentWillMount() {
-		const { dispatch, state } = this.props
-		const { page } = state
-		const from = (page - 1) * PAGE_SIZE
-		const to = from + PAGE_SIZE - 1
-		dispatch(retrievePath(['articles', { from, to },
-			['number', 'content']]))
-	}
-
-	componentWillReceiveProps(nextProps) {
-		if (this.props.state.page !== nextProps.state.page) {
-			const { dispatch, state } = nextProps
-			const { page } = state
+	static async loadProps(params, cb) {
+		try {
+			const page = await UiModel.getValue(['articleList', 'page'])
 			const from = (page - 1) * PAGE_SIZE
 			const to = from + PAGE_SIZE - 1
-			dispatch(retrievePath(['articles', { from, to },
-				['number', 'content']]))
+			const response = await DataModel.get(['articles',
+				{ from, to }, ['number', 'content']], ['articles', 'length'])
+			const { articles } = response.json
+			const length = articles.length
+			delete articles.length
+			const totalPages = Math.ceil(length / PAGE_SIZE)
+			cb(null, { articles, page, totalPages })
+		} catch (err) {
+			console.error(err.message)
+			cb(err)
+		}
+	}
+
+	static childContextTypes = {
+		reload: React.PropTypes.func
+	}
+
+	getChildContext() {
+		const { reloadAsyncProps } = this.props
+		return {
+			reload: () => reloadAsyncProps()
 		}
 	}
 
 	render() {
-		const { state, articles, dispatch } = this.props
-		const { page } = state
-		const from = (page - 1) * PAGE_SIZE
-		const to = from + PAGE_SIZE - 1
+		const { page, articles, totalPages } = this.props
 		const props = {
-			...state,
-			dispatch,
-			articles: articles && object2Array(articles).slice(from, to + 1),
+			page,
+			totalPages,
+			articles: object2Array(articles),
 		}
-		return props.articles && props.articles.length ?
-			<ArticleList { ...props } /> : null
+		return <ArticleList { ...props } />
 	}
 }

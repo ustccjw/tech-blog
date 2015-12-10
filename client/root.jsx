@@ -1,24 +1,19 @@
 import React from 'react'
-import { Provider } from 'react-redux'
-import { ReduxRouter } from 'redux-router'
-import configureStore from './store/configureStore'
+import { Router } from 'react-router'
+import { createHistory } from 'history'
+import useScroll from 'scroll-behavior/lib/useStandardScroll'
+import AsyncProps from 'async-props'
+import routes from './route'
 
-const store = configureStore()
+const history = useScroll(createHistory)()
+const loading = <div>Loadiomng...</div>
 
 export default class Root extends React.Component {
 	render() {
-		let devTool = null
-		if (process.env.NODE_ENV === 'development') {
-			const DevTools = require('./dev-tool')
-			devTool = <DevTools />
-		}
 		return (
-			<Provider store={ store }>
-				<div>
-					<ReduxRouter />
-					{ devTool }
-				</div>
-			</Provider>
+			<Router routes={ routes } history={ history }
+				RoutingContext={ AsyncProps }
+				renderLoading={ () => loading } />
 		)
 	}
 }

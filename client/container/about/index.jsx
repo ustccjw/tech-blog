@@ -1,25 +1,36 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { retrievePath } from 'redux-falcor'
 import About from '../../component/about'
+import { DataModel } from '../../model'
 
-@connect(state => ({
-	resume: state.entities.resume || null,
-}))
 export default class AboutContainer extends React.Component {
 	static propTypes = {
 		resume: React.PropTypes.string,
-		dispatch: React.PropTypes.func,
 	}
 
-	componentWillMount() {
-		const { dispatch } = this.props
-		dispatch(retrievePath('resume'))
+	static async loadProps(params, cb) {
+		try {
+			const resume = await DataModel.getValue(['resume'])
+			cb(null, { resume })
+		} catch (err) {
+			console.error(err)
+			cb(err)
+		}
+	}
+
+	static childContextTypes = {
+		reload: React.PropTypes.func
+	}
+
+	getChildContext() {
+		const { reloadAsyncProps } = this.props
+		return {
+			reload: () => reloadAsyncProps()
+		}
 	}
 
 	render() {
 		const { resume } = this.props
 		const props = { resume }
-		return props.resume ? <About { ...props } /> : null
+		return <About { ...props } />
 	}
 }

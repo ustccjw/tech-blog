@@ -11,7 +11,7 @@ const BaseRouter = Router.createClass([{
 	route: 'articles[{ranges:indexRanges}][{keys:props}]',
 	get: async pathSet => {
 		const result = []
-		const tasks = pathSet.indexRanges.map(({from, to}) => {
+		const tasks = pathSet.indexRanges.map(({ from, to }) => {
 			return Article.get(from, to).
 				then(articles => articles.
 					map(article => JSON.parse(article)).
@@ -28,6 +28,15 @@ const BaseRouter = Router.createClass([{
 		})
 		await* tasks
 		return result
+	},
+}, {
+	route: 'articles.length',
+	get: async pathSet => {
+		const len = await Article.getLength()
+		return {
+			path: ['articles', 'length'],
+			value: len,
+		}
 	},
 }, {
 	route: 'articleByNumber[{integers:numbers}][{keys:props}]',
@@ -52,7 +61,7 @@ const BaseRouter = Router.createClass([{
 }])
 
 export default class ModelRouter extends BaseRouter {
-	constructor(userId=null) {
+	constructor(userId = null) {
 		super()
 		this.userId = userId
 	}

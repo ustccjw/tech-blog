@@ -10,6 +10,10 @@ export default class Article {
 		return redis.zrangebyscore('articles', -number, -number)
 	}
 
+	static getLength() {
+		return redis.zcard('articles')
+	}
+
 	static async init() {
 		redis.del('articles')
 		const url = 'https://api.github.com/repos/ustccjw/Blog/issues'

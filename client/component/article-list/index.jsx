@@ -1,34 +1,43 @@
 import React from 'react'
 import Card from '../card'
 import Pager from '../pager'
-import { setPage } from '../../action/acticle-list'
+import { UiModel } from '../../model'
 import './style'
 
 export default class ArticleList extends React.Component {
 	static propTypes = {
 		page: React.PropTypes.number.isRequired,
 		articles: React.PropTypes.array.isRequired,
-		dispatch: React.PropTypes.func.isRequired,
+		totalPages: React.PropTypes.number.isRequired,
+	}
+
+	static contextTypes = {
+		reload: React.PropTypes.func.isRequired,
 	}
 
 	render() {
-		const { articles, page, dispatch } = this.props
+		const { articles, page, totalPages } = this.props
 		const articleComponents = articles.map(article =>
 			<Card key={article.number} article={ article } />
 		)
-		const handleChange = type => {
+		const handleChange = async type => {
 			if ('prev' === type) {
-				if (page > 1) {
-					dispatch(setPage(page - 1))
-				}
+				await UiModel.setValue(['articleList', 'page'], page - 1)
+				this.context.reload()
 			} else if ('next' === type) {
-				dispatch(setPage(page + 1))
+				await UiModel.setValue(['articleList', 'page'], page + 1)
+				this.context.reload()
 			}
+		}
+		const props = {
+			handleChange,
+			canPrev: page > 1,
+			canNext: page < totalPages,
 		}
 		return (
 			<ideal-articlelist>
 				{ articleComponents }
-				<Pager handleChange={ handleChange } />
+				<Pager { ...props } />
 			</ideal-articlelist>
 		)
 	}

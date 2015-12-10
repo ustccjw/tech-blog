@@ -1,29 +1,40 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { retrievePath } from 'redux-falcor'
 import Article from '../../component/article'
+import { DataModel } from '../../model'
 
-@connect(state => ({
-	number: +state.router.params.number,
-	articleByNumber: state.entities.articleByNumber || null,
-}))
 export default class ArticleContainer extends React.Component {
 	static propTypes = {
-		number: React.PropTypes.number,
-		articleByNumber: React.PropTypes.object,
-		dispatch: React.PropTypes.func,
+		params: React.PropTypes.object,
+		article: React.PropTypes.object,
 	}
 
-	componentWillMount() {
-		const { dispatch, number } = this.props
-		dispatch(retrievePath(['articleByNumber', number, 'content']))
+	static async loadProps(params, cb) {
+		try {
+			const { number } = params
+			const content = await DataModel.getValue(['articleByNumber',
+				number, 'content'])
+			const article = { content }
+			cb(null, { article })
+		} catch (err) {
+			console.error(err.message)
+			cb(err)
+		}
+	}
+
+	static childContextTypes = {
+		reload: React.PropTypes.func
+	}
+
+	getChildContext() {
+		const { reloadAsyncProps } = this.props
+		return {
+			reload: () => reloadAsyncProps()
+		}
 	}
 
 	render() {
-		const { articleByNumber, number } = this.props
-		const props = {
-			article: articleByNumber && articleByNumber[number],
-		}
-		return props.article ? <Article { ...props } /> : null
+		const { article } = this.props
+		const props = { article }
+		return <Article { ...props } />
 	}
 }
