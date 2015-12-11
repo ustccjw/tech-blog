@@ -13,6 +13,7 @@ import app from '../app'
 import ModelRouter from './model-router'
 import routes from '../../client/route'
 import { safeScript } from '../../util'
+import { dataModel, uiModel } from '../../client/model'
 
 // public resource
 app.use(favicon(path.join(app.get('ROOT'), 'public/favicon.ico')))
@@ -35,7 +36,12 @@ app.get('*', (req, res) => {
 			)
 			const htmlTemplate = await fs.readFile(path.join(app.get('ROOT'),
 				'view/index.html'))
-			scriptTag = safeScript(scriptTag)
+			const dataCache = safeScript(JSON.stringify(dataModel.getCache()))
+			const uiCache = safeScript(JSON.stringify(uiModel.getCache()))
+			scriptTag = `<script>
+				window.dataCache=${dataCache}
+				window.uiCache=${uiCache}
+			</script>`
 			const html = template(htmlTemplate, {
 				html: appHTML,
 				scriptTag,

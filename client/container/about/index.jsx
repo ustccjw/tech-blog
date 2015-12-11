@@ -1,6 +1,6 @@
 import React from 'react'
 import About from '../../component/about'
-import { DataModel } from '../../model'
+import { dataModel } from '../../model'
 
 export default class AboutContainer extends React.Component {
 	static propTypes = {
@@ -9,7 +9,7 @@ export default class AboutContainer extends React.Component {
 
 	static async loadProps(params, cb) {
 		try {
-			const resume = await DataModel.getValue(['resume'])
+			const resume = await dataModel.getValue(['resume'])
 			cb(null, { resume })
 		} catch (err) {
 			console.error(err)

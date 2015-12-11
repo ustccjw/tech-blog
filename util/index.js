@@ -14,18 +14,16 @@ export const getObjectByKeys = (obj, keys) => {
 	return res
 }
 
-export const safeScript = script => {
-	let str = script.slice(8, -9)
+export const safeScript = str => {
 	const tagsToReplace = {
 		'&': '&amp;',
 		'<': '&lt;',
 		'>': '&gt;',
 	}
-	str = str.replace(/[&<>]/g, tag => tagsToReplace[tag])
-	return `<script>${str}</script>`
+	return str.replace(/[&<>]/g, tag => tagsToReplace[tag])
 }
 
-export const unsafe = str => {
+export const unsafeScript = str => {
 	const tagsToReplace = {
 		'&amp;': '&',
 		'&lt;': '<',

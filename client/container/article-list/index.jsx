@@ -1,6 +1,6 @@
 import React from 'react'
 import ArticleList from '../../component/article-list'
-import { DataModel, UiModel } from '../../model'
+import { dataModel, uiModel } from '../../model'
 import { object2Array } from '../../../util'
 import { PAGE_SIZE } from '../../config'
 
@@ -13,10 +13,10 @@ export default class ArticleListContainer extends React.Component {
 
 	static async loadProps(params, cb) {
 		try {
-			const page = await UiModel.getValue(['articleList', 'page'])
+			const page = await uiModel.getValue(['articleList', 'page'])
 			const from = (page - 1) * PAGE_SIZE
 			const to = from + PAGE_SIZE - 1
-			const response = await DataModel.get(['articles',
+			const response = await dataModel.get(['articles',
 				{ from, to }, ['number', 'content']], ['articles', 'length'])
 			const { articles } = response.json
 			const length = articles.length

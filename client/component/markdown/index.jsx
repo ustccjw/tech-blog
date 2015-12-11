@@ -1,7 +1,7 @@
 import React from 'react'
 import Remarkable from 'react-remarkable'
 import hljs from 'highlight.js'
-import { unsafe } from '../../../util'
+import { unsafeScript } from '../../../util'
 import './style'
 
 const CONFIG = {
@@ -31,7 +31,7 @@ export default class Markdown extends React.Component {
 	render() {
 		const { content, options } = this.props
 		const props = {
-			source: unsafe(content),
+			source: unsafeScript(content),
 			options: { ...CONFIG, ...options },
 		}
 		return (
