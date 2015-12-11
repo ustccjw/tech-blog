@@ -21,3 +21,7 @@ export const uiModel = new falcor.Model({
 if (global.dataCache) {
 	dataModel.setCache(global.dataCache)
 }
+
+if (global.uiCache) {
+	uiModel.setCache(global.uiCache)
+}
