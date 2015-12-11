@@ -19,15 +19,21 @@ module.exports = {
 		path: path.join(__dirname, 'dev'),
 		filename: 'backend.js',
 	},
+	resolve: {
+		extensions: ['', '.jsx', '.js', '.scss', '.css'],
+	},
 	node: {
 		__filename: true,
 		__dirname: false,
 	},
 	module: {
 		loaders: [{
-			test: /\.js$/,
-			exclude: /node_modules/,
+			test: /(\.js|\.jsx)$/,
+			exclude: /(node_modules)/,
 			loader: 'babel',
+		}, {
+			test: /\.(png|jpg|jpeg)$/,
+			loader: 'url?limit=3072',
 		}],
 	},
 	plugins: [
@@ -36,6 +42,10 @@ module.exports = {
 			raw: true,
 			entryOnly: false,
 		}),
+		new webpack.NormalModuleReplacementPlugin(/(\.scss|\.css)$/,
+			path.join(__dirname, 'node_modules/node-noop/index.js')),
+		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
+			path.join(__dirname, 'fix-modules/async-props/index.js')),
 	],
 	externals: nodeModules,
 	devtool: 'sourcemap',

@@ -24,7 +24,7 @@ export default class ArticleListContainer extends React.Component {
 			const totalPages = Math.ceil(length / PAGE_SIZE)
 			cb(null, { articles, page, totalPages })
 		} catch (err) {
-			console.error(err.message)
+			console.error(err)
 			cb(err)
 		}
 	}

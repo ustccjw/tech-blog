@@ -4,6 +4,7 @@ const path = require('path')
 const fs = require('fs')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const nodeModules = {}
 fs.readdirSync('node_modules').
@@ -19,15 +20,21 @@ exports.backend = {
 		path: path.join(__dirname, 'build'),
 		filename: 'backend.js',
 	},
+	resolve: {
+		extensions: ['', '.jsx', '.js', '.scss', '.css'],
+	},
 	node: {
 		__filename: true,
 		__dirname: false,
 	},
 	module: {
 		loaders: [{
-			test: /\.js$/,
-			exclude: /node_modules/,
+			test: /(\.js|\.jsx)$/,
+			exclude: /(node_modules)/,
 			loader: 'babel',
+		}, {
+			test: /\.(png|jpg|jpeg)$/,
+			loader: 'url?limit=3072',
 		}],
 	},
 	plugins: [
@@ -35,6 +42,10 @@ exports.backend = {
 			raw: true,
 			entryOnly: false,
 		}),
+		new webpack.NormalModuleReplacementPlugin(/(\.scss|\.css)$/,
+			path.join(__dirname, 'node_modules/node-noop/index.js')),
+		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
+			path.join(__dirname, 'fix-modules/async-props/index.js')),
 	],
 	externals: nodeModules,
 	devtool: 'sourcemap',
@@ -60,7 +71,8 @@ exports.frontend = {
 			loader: 'babel',
 		}, {
 			test: /(\.scss|\.css)$/,
-			loader: 'style!css!postcss!sass',
+			loader: ExtractTextPlugin.extract('style',
+				'css?sourceMap!postcss!sass?sourceMap'),
 		}, {
 			test: /\.(png|jpg|jpeg)$/,
 			loader: 'url?limit=3072',
@@ -68,10 +80,11 @@ exports.frontend = {
 	},
 	externals: {
 		'falcor': 'falcor',
-		'highlight.js': 'hljs',
+		'falcor-http-datasource': 'falcor.HttpDataSource',
 	},
 	postcss: [autoprefixer],
 	plugins: [
+		new ExtractTextPlugin('main.css'),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.UglifyJsPlugin({
 			compressor: {
@@ -79,6 +92,8 @@ exports.frontend = {
 				warnings: false,
 			},
 		}),
+		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
+			path.join(__dirname, 'fix-modules/async-props/index.js')),
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('production'),
 		}),
