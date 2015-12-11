@@ -1,10 +1,18 @@
 import path from 'path'
+import fs from 'mz/fs'
 import favicon from 'serve-favicon'
 import serveStatic from 'serve-static'
 import errorHandler from 'errorhandler'
 import falcorMiddleware from 'falcor-express'
+import React from 'react'
+import { renderToString } from 'react-dom/server'
+import { match, createRoutes } from 'react-router'
+import AsyncProps, { loadPropsOnServer } from 'async-props'
+import template from 'es6-template-strings'
 import app from '../app'
 import ModelRouter from './model-router'
+import routes from '../../client/route'
+import { safeScript } from '../../util'
 
 // public resource
 app.use(favicon(path.join(app.get('ROOT'), 'public/favicon.ico')))
@@ -19,7 +27,22 @@ app.use('/model.json', falcorMiddleware.dataSourceRoute((req, res) => {
 
 // default index
 app.get('*', (req, res) => {
-	res.sendFile(path.join(app.get('ROOT'), 'view/index.html'))
+	match({ routes, location: req.url },
+		(err, redirect, renderProps) => {
+		loadPropsOnServer(renderProps, async (err, asyncProps, scriptTag) => {
+			const appHTML = renderToString(
+				<AsyncProps { ...renderProps } { ...asyncProps } />
+			)
+			const htmlTemplate = await fs.readFile(path.join(app.get('ROOT'),
+				'view/index.html'))
+			scriptTag = safeScript(scriptTag)
+			const html = template(htmlTemplate, {
+				html: appHTML,
+				scriptTag,
+			})
+			res.send(html)
+		})
+	})
 })
 
 

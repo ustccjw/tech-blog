@@ -8,3 +8,4 @@ explore and practice
 * webpack with gulp
 * hot loader in backend and frontend
 * async props on route component
+* server render

@@ -3,9 +3,7 @@
 const path = require('path')
 const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
-
-const IP = '127.0.0.1'
-// const IP = '192.168.1.5'
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 module.exports = {
 	entry: [
@@ -16,10 +14,13 @@ module.exports = {
 	output: {
 		path: path.join(__dirname, 'dev'),
 		filename: 'frontend.js',
-		publicPath: `http://${IP}:3000/`,
+		publicPath: 'http://127.0.0.1:3000/',
 	},
 	resolve: {
 		extensions: ['', '.jsx', '.js', '.scss', '.css'],
+	},node: {
+		__filename: true,
+		__dirname: false,
 	},
 	module: {
 		loaders: [{
@@ -28,7 +29,8 @@ module.exports = {
 			loader: 'babel',
 		}, {
 			test: /(\.scss|\.css)$/,
-			loader: 'style!css?sourceMap!postcss!sass?sourceMap',
+			loader: ExtractTextPlugin.extract('style',
+				'css?sourceMap!postcss!sass?sourceMap'),
 		}, {
 			test: /\.(png|jpg|jpeg)$/,
 			loader: 'url?limit=3072',
@@ -36,13 +38,16 @@ module.exports = {
 	},
 	externals: {
 		'falcor': 'falcor',
-		'highlight.js': 'hljs',
+		'falcor-http-datasource': 'falcor.HttpDataSource',
 	},
 	postcss: [autoprefixer],
 	plugins: [
+		new ExtractTextPlugin('main.css'),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
+		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
+			path.join(__dirname, '../fix-modules/async-props/index.js')),
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('development'),
 		}),

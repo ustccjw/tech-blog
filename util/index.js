@@ -13,3 +13,23 @@ export const getObjectByKeys = (obj, keys) => {
 	keys.forEach(key => res[key] = obj[key])
 	return res
 }
+
+export const safeScript = script => {
+	let str = script.slice(8, -9)
+	const tagsToReplace = {
+		'&': '&amp;',
+		'<': '&lt;',
+		'>': '&gt;',
+	}
+	str = str.replace(/[&<>]/g, tag => tagsToReplace[tag])
+	return `<script>${str}</script>`
+}
+
+export const unsafe = str => {
+	const tagsToReplace = {
+		'&amp;': '&',
+		'&lt;': '<',
+		'&gt;': '>',
+	}
+	return str.replace(/(&amp;|&lt;|&gt;)/g, tag => tagsToReplace[tag])
+}
