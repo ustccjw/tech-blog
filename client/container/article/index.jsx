@@ -1,6 +1,6 @@
 import React from 'react'
 import Article from '../../component/article'
-import { dataModel } from '../../model'
+import { dataModel } from '../../../model'
 
 export default class ArticleContainer extends React.Component {
 	static propTypes = {

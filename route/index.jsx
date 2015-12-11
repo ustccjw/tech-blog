@@ -1,9 +1,9 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
-import App from '../container/app'
-import ArticleList from '../container/article-list'
-import Article from '../container/article'
-import About from '../container/about'
+import App from '../client/container/app'
+import ArticleList from '../client/container/article-list'
+import Article from '../client/container/article'
+import About from '../client/container/about'
 
 export default (
 	<Route path="/" component={ App }>

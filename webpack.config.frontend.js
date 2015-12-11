@@ -46,8 +46,6 @@ module.exports = {
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
 		new webpack.NoErrorsPlugin(),
-		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
-			path.join(__dirname, '../fix-modules/async-props/index.js')),
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('development'),
 		}),

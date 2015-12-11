@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from '../card'
 import Pager from '../pager'
-import { uiModel } from '../../model'
+import { uiModel } from '../../../model'
 import './style'
 
 export default class ArticleList extends React.Component {

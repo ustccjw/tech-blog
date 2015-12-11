@@ -11,9 +11,9 @@ import AsyncProps, { loadPropsOnServer } from 'async-props'
 import template from 'es6-template-strings'
 import app from '../app'
 import ModelRouter from './model-router'
-import routes from '../../client/route'
+import routes from '../../route'
+import { dataModel, uiModel } from '../../model'
 import { safeScript } from '../../util'
-import { dataModel, uiModel } from '../../client/model'
 
 // public resource
 app.use(favicon(path.join(app.get('ROOT'), 'public/favicon.ico')))

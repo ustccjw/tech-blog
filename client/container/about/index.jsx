@@ -1,6 +1,6 @@
 import React from 'react'
 import About from '../../component/about'
-import { dataModel } from '../../model'
+import { dataModel } from '../../../model'
 
 export default class AboutContainer extends React.Component {
 	static propTypes = {

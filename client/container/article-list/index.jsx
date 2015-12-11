@@ -1,6 +1,6 @@
 import React from 'react'
 import ArticleList from '../../component/article-list'
-import { dataModel, uiModel } from '../../model'
+import { dataModel, uiModel } from '../../../model'
 import { object2Array } from '../../../util'
 import { PAGE_SIZE } from '../../config'
 
