@@ -25,7 +25,6 @@ app.use('/model.json', falcorMiddleware.dataSourceRoute((req, res) => {
 	return new ModelRouter(req.cookies.userId)
 }))
 
-
 // default index
 app.get('*', (req, res) => {
 	match({ routes, location: req.url },
@@ -47,6 +46,7 @@ app.get('*', (req, res) => {
 				scriptTag,
 			})
 			res.send(html)
+			dataModel.setCache(null)
 		})
 	})
 })
