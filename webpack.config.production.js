@@ -44,8 +44,6 @@ exports.backend = {
 		}),
 		new webpack.NormalModuleReplacementPlugin(/(\.scss|\.css)$/,
 			path.join(__dirname, 'node_modules/node-noop/index.js')),
-		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
-			path.join(__dirname, 'fix-modules/async-props/index.js')),
 	],
 	externals: nodeModules,
 	devtool: 'sourcemap',
@@ -92,8 +90,6 @@ exports.frontend = {
 				warnings: false,
 			},
 		}),
-		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
-			path.join(__dirname, 'fix-modules/async-props/index.js')),
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('production'),
 		}),

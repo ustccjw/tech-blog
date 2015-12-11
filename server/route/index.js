@@ -11,7 +11,8 @@ import AsyncProps, { loadPropsOnServer } from 'async-props'
 import template from 'es6-template-strings'
 import app from '../app'
 import ModelRouter from './model-router'
-import routes from '../../client/route'
+import routes from '../../route'
+import { dataModel, uiModel } from '../../model'
 import { safeScript } from '../../util'
 
 // public resource
@@ -35,7 +36,12 @@ app.get('*', (req, res) => {
 			)
 			const htmlTemplate = await fs.readFile(path.join(app.get('ROOT'),
 				'view/index.html'))
-			scriptTag = safeScript(scriptTag)
+			const dataCache = safeScript(JSON.stringify(dataModel.getCache()))
+			const uiCache = safeScript(JSON.stringify(uiModel.getCache()))
+			scriptTag = `<script>
+				window.dataCache=${dataCache}
+				window.uiCache=${uiCache}
+			</script>`
 			const html = template(htmlTemplate, {
 				html: appHTML,
 				scriptTag,

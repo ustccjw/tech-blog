@@ -4,7 +4,7 @@ import { Router } from 'react-router'
 import { createHistory } from 'history'
 import useScroll from 'scroll-behavior/lib/useStandardScroll'
 import AsyncProps from 'async-props'
-import routes from './route'
+import routes from '../route'
 
 window.React = React
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from '../card'
 import Pager from '../pager'
-import { UiModel } from '../../model'
+import { uiModel } from '../../../model'
 import './style'
 
 export default class ArticleList extends React.Component {
@@ -22,10 +22,10 @@ export default class ArticleList extends React.Component {
 		)
 		const handleChange = async type => {
 			if ('prev' === type) {
-				await UiModel.setValue(['articleList', 'page'], page - 1)
+				await uiModel.setValue(['articleList', 'page'], page - 1)
 				this.context.reload()
 			} else if ('next' === type) {
-				await UiModel.setValue(['articleList', 'page'], page + 1)
+				await uiModel.setValue(['articleList', 'page'], page + 1)
 				this.context.reload()
 			}
 		}
