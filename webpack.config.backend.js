@@ -44,6 +44,8 @@ module.exports = {
 		}),
 		new webpack.NormalModuleReplacementPlugin(/(\.scss|\.css)$/,
 			path.join(__dirname, 'node_modules/node-noop/index.js')),
+		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
+			path.join(__dirname, 'fix_modules/async-props/index.jsx')),
 	],
 	externals: nodeModules,
 	devtool: 'sourcemap',

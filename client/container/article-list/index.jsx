@@ -29,17 +29,6 @@ export default class ArticleListContainer extends React.Component {
 		}
 	}
 
-	static childContextTypes = {
-		reload: React.PropTypes.func,
-	}
-
-	getChildContext() {
-		const { reloadAsyncProps } = this.props
-		return {
-			reload: () => reloadAsyncProps(),
-		}
-	}
-
 	render() {
 		const { page, articles, totalPages } = this.props
 		const props = {

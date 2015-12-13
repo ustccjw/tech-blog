@@ -18,9 +18,6 @@ module.exports = {
 	},
 	resolve: {
 		extensions: ['', '.jsx', '.js', '.scss', '.css'],
-	},node: {
-		__filename: true,
-		__dirname: false,
 	},
 	module: {
 		loaders: [{
@@ -49,6 +46,8 @@ module.exports = {
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('development'),
 		}),
+		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
+			path.join(__dirname, '../fix_modules/async-props/index.jsx')),
 	],
 	devtool: 'inline-source-map',
 }

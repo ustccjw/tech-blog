@@ -21,17 +21,6 @@ export default class ArticleContainer extends React.Component {
 		}
 	}
 
-	static childContextTypes = {
-		reload: React.PropTypes.func,
-	}
-
-	getChildContext() {
-		const { reloadAsyncProps } = this.props
-		return {
-			reload: () => reloadAsyncProps(),
-		}
-	}
-
 	render() {
 		const { article } = this.props
 		const props = { article }

@@ -5,3 +5,4 @@ dist
 public
 gulpfile.js
 webpack.config.*.js
+fix_modules
