@@ -30,9 +30,9 @@ app.get('*', (req, res) => {
 	match({ routes, location: req.url },
 		(err, redirect, renderProps) => {
 		loadPropsOnServer(renderProps, async (err, asyncProps, scriptTag) => {
-			const appHTML = renderToString(
-				<AsyncProps { ...renderProps } { ...asyncProps } />
-			)
+			const props = { ...renderProps, ...asyncProps }
+			const appHTML = renderToString(React.createElement(AsyncProps,
+				props))
 			const htmlTemplate = await fs.readFile(path.join(app.get('ROOT'),
 				'view/index.html'))
 			const dataCache = safeScript(JSON.stringify(dataModel.getCache()))
