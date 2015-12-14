@@ -33,12 +33,8 @@ export default class Pager extends React.Component {
 		return (
 			<ideal-pager>
 				<ul>
-					<li>
-						{ prevComponent }
-					</li>
-					<li>
-						{ nextComponent }
-					</li>
+					<li>{ prevComponent }</li>
+					<li>{ nextComponent }</li>
 				</ul>
 			</ideal-pager>
 		)
