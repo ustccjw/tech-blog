@@ -17,7 +17,8 @@ export default class ArticleListContainer extends React.Component {
 			const from = (page - 1) * PAGE_SIZE
 			const to = from + PAGE_SIZE - 1
 			const response = await dataModel.get(['articles',
-				{ from, to }, ['number', 'content']], ['articles', 'length'])
+				{ from, to }, ['number', 'introduction']],
+					['articles', 'length'])
 			const { articles } = response.json
 			const length = articles.length
 			delete articles.length
