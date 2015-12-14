@@ -1,37 +1,26 @@
 import React from 'react'
-import Header from '../../component/header'
+import App from '../../component/app'
+import Loading from '../../component/loading'
 import './style'
 
-export default class App extends React.Component {
+export default class AppContainer extends React.Component {
 	static propTypes = {
 		children: React.PropTypes.any,
 	}
 
+	static contextTypes = {
+		asyncProps: React.PropTypes.object.isRequired,
+	}
+
 	render() {
 		const { children } = this.props
-		const props = {
-			title: 'My name is Jiawei Chen, this blog is for Exploring and Practicing, especially for React.',
-			links: [{
-				label: 'POSTS',
-				value: '/articles/',
-			}, {
-				label: 'ABOUT',
-				value: '/about/',
-			}, {
-				label: 'GITHUB',
-				value: 'https://github.com/ustccjw',
-			}, {
-				label: 'SOURCE',
-				value: 'https://github.com/ustccjw/tech-blog',
-			}],
-		}
+		const { loading } = this.context.asyncProps
+		const props = { children, loading }
 		return (
-			<ideal-app>
-				<Header {...props} />
-				<article>
-					{ children }
-				</article>
-			</ideal-app>
+			<div>
+				<App { ...props } />
+				{ loading ? <Loading /> : null }
+			</div>
 		)
 	}
 }

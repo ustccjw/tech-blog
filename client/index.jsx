@@ -9,11 +9,10 @@ import routes from '../route'
 window.React = React
 
 const history = useScroll(createHistory)()
-const loading = <div>Loading...</div>
 
 const router = (
 	<Router routes={ routes } history={ history }
-		RoutingContext={ AsyncProps } renderLoading={ () => loading } />
+		RoutingContext={ AsyncProps } />
 )
 
 ReactDOM.render(router, document.querySelector('.react-root'))

@@ -1,0 +1,75 @@
+/* Rotation */
+@keyframes rotate {
+	from {transform: rotate(0deg);}
+	to {transform: rotate(360deg);}
+}
+
+/* The loader */
+ideal-loading {
+	display: flex;
+	position: fixed;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 9999;
+	background-color: rgba(55, 55, 55, 0.6);
+	& > div {
+
+		/* Dimensions */
+		width: 4em;
+		height: 4em;
+
+		z-index: 0;
+
+		/* Draw circle */
+		border-radius: 50%;
+
+		/* Position */
+		position: relative;
+		margin: auto;
+
+		/* Border */
+		border: 0.25em solid #decaff;
+
+		/* Background color*/
+		background-color: #decaff;
+
+		/* Animate */
+		animation: rotate 1.5s infinite linear;
+	}
+
+	/* Position a circle underneath */
+	& > div:after {
+
+		/* Must have this to work */
+		content: "";
+
+		/* Dimensions */
+		width: 4em;
+		height: 4em;
+
+		/* Draw circle */
+		border-radius: 50%;
+
+		/* Border */
+		border: 0.25em solid #888;
+		border-top: 0.25em solid #decaff;
+		border-right: 0.25em solid #decaff;
+
+		/* Dimensions */
+		width: 3.5em;
+		height: 3.5em;
+
+		/* Position underneath div */
+		z-index: -1;
+
+		/* Background color*/
+		background-color: #decaff;
+
+		/* Position */
+		position: absolute;
+		left: 0em;
+		top: 0em;
+	}
+}
