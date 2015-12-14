@@ -16,15 +16,13 @@ const BaseRouter = Router.createClass([{
 				then(articles => articles.
 					map(article => JSON.parse(article)).
 					forEach((article, index) => {
-						article.introduction = article.content.slice(0, 200) +
-							'...'
 						result.push({
 							path: ['articleByNumber', article.number],
 							value: getObjectByKeys(article, pathSet.props),
 						})
 						result.push({
 							path: ['articles', from + index],
-							value: $ref(['articleByNumber', article.number]),
+							value: getObjectByKeys(article, pathSet.props),
 						})
 					}))
 		})

@@ -19,6 +19,7 @@ const getArticles = async url => {
 		commentsUrl: article.comments_url,
 		createdDate: article.created_at,
 		updateDate: article.updated_at,
+		introduction: article.body.slice(0, 200) + '...',
 		author: {
 			name: article.user.login,
 			link: article.user.html_url,
