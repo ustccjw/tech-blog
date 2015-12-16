@@ -27,25 +27,24 @@ app.use('/model.json', falcorMiddleware.dataSourceRoute((req, res) => {
 
 // default index
 app.get('*', (req, res) => {
-	match({ routes, location: req.url },
-		(err, redirect, renderProps) => {
-		loadPropsOnServer(renderProps, async (err, asyncProps, scriptTag) => {
-			const props = { ...renderProps, ...asyncProps }
-			const appHTML = renderToString(React.createElement(AsyncProps,
-				props))
-			const htmlTemplate = await fs.readFile(path.join(app.get('ROOT'),
-				'view/index.html'))
-			const dataCache = safeScript(JSON.stringify(dataModel.getCache()))
-			scriptTag = `<script>
-				window.dataCache=${dataCache}
-			</script>`
-			const html = template(htmlTemplate, {
-				html: appHTML,
-				scriptTag,
-			})
-			res.send(html)
-			dataModel.setCache(null)
+	match({ routes, location: req.url }, async (err, redirect, renderProps) =>
+	{
+		const asyncProps = await loadPropsOnServer(renderProps)
+		const props = { ...renderProps, ...asyncProps }
+		const appHTML = renderToString(React.createElement(AsyncProps,
+			props))
+		const htmlTemplate = await fs.readFile(path.join(app.get('ROOT'),
+			'view/index.html'))
+		const dataCache = safeScript(JSON.stringify(dataModel.getCache()))
+		const scriptTag = `<script>
+			window.dataCache=${dataCache}
+		</script>`
+		const html = template(htmlTemplate, {
+			html: appHTML,
+			scriptTag,
 		})
+		res.send(html)
+		dataModel.setCache(null)
 	})
 })
 

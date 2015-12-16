@@ -8,17 +8,12 @@ export default class ArticleContainer extends React.Component {
 		article: React.PropTypes.object,
 	}
 
-	static async loadProps(params, cb) {
-		try {
-			const { number } = params
-			const content = await dataModel.getValue(['articleByNumber',
-				number, 'content'])
-			const article = { content }
-			cb(null, { article })
-		} catch (err) {
-			console.error(err.message)
-			cb(err)
-		}
+	static async loadProps(params) {
+		const { number } = params
+		const content = await dataModel.getValue(['articleByNumber',
+			number, 'content'])
+		const article = { content }
+		return { article }
 	}
 
 	render() {

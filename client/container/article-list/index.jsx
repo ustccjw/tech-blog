@@ -11,23 +11,18 @@ export default class ArticleListContainer extends React.Component {
 		totalPages: React.PropTypes.number.isRequired,
 	}
 
-	static async loadProps(params, cb) {
-		try {
-			const page = await uiModel.getValue(['articleList', 'page'])
-			const from = (page - 1) * PAGE_SIZE
-			const to = from + PAGE_SIZE - 1
-			const response = await dataModel.get(['articles',
-				{ from, to }, ['number', 'introduction']],
-					['articles', 'length'])
-			const { articles } = response.json
-			const length = articles.length
-			delete articles.length
-			const totalPages = Math.ceil(length / PAGE_SIZE)
-			cb(null, { articles, page, totalPages })
-		} catch (err) {
-			console.error(err)
-			cb(err)
-		}
+	static async loadProps(params) {
+		const page = await uiModel.getValue(['articleList', 'page'])
+		const from = (page - 1) * PAGE_SIZE
+		const to = from + PAGE_SIZE - 1
+		const response = await dataModel.get(['articles',
+			{ from, to }, ['number', 'introduction']],
+				['articles', 'length'])
+		const { articles } = response.json
+		const length = articles.length
+		delete articles.length
+		const totalPages = Math.ceil(length / PAGE_SIZE)
+		return { articles, page, totalPages }
 	}
 
 	render() {

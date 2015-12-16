@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/ustccjw/tech-blog#readme",
   "dependencies": {
-    "async-props": "^0.2.0",
     "body-parser": "^1.14.1",
     "compression": "^1.6.0",
     "cookie-parser": "^1.4.0",

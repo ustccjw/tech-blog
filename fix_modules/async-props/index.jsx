@@ -1,4 +1,3 @@
-/*global __ASYNC_PROPS__*/
 import React from 'react'
 import RoutingContext from 'react-router/lib/RoutingContext'
 
@@ -9,58 +8,53 @@ function last(arr) {
 }
 
 function eachComponents(components, iterator) {
-	for (var i = 0, l = components.length; i < l; i++) {
-		if (typeof components[i] === 'object') {
-			for (var key in components[i]) {
-				iterator(components[i][key], i, key)
+	components.forEach(value => {
+		if (typeof value === 'object') {
+			for (const Component of value) {
+				iterator(Component)
 			}
 		} else {
-			iterator(components[i], i)
+			iterator(value)
 		}
-	}
+	})
 }
 
 function filterAndFlattenComponents(components) {
-	var flattened = []
-	eachComponents(components, (Component) => {
-		if (Component.loadProps)
+	const flattened = []
+	eachComponents(components, Component => {
+		if (Component.loadProps) {
 			flattened.push(Component)
+		}
 	})
 	return flattened
 }
 
-function loadAsyncProps(components, params, cb) {
+async function loadAsyncProps(components, params) {
+
 	// flatten the multi-component routes
-	let componentsArray = []
-	let propsArray = []
-	let needToLoadCounter = components.length
-
-	const maybeFinish = () => {
-		if (needToLoadCounter === 0)
-			cb(null, { propsArray, componentsArray })
-	}
-
-	components.forEach((Component, index) => {
-		Component.loadProps(params, (error, props) => {
-			needToLoadCounter--
+	const componentsArray = []
+	const propsArray = []
+	const tasks = components.map((Component, index) => {
+		return Component.loadProps(params).then(props => {
 			propsArray[index] = props
 			componentsArray[index] = Component
-			maybeFinish()
 		})
 	})
+	await* tasks
+	return { componentsArray, propsArray }
 }
 
 function lookupPropsForComponent(Component, propsAndComponents) {
 	const { componentsArray, propsArray } = propsAndComponents
-	var index = componentsArray.indexOf(Component)
+	const index = componentsArray.indexOf(Component)
 	return propsArray[index]
 }
 
 function mergePropsAndComponents(current, changes) {
-	for (var i = 0, l = changes.propsArray.length; i < l; i++) {
-		let Component = changes.componentsArray[i]
-		let position = current.componentsArray.indexOf(Component)
-		let isNew = position === -1
+	for (let i = 0, l = changes.propsArray.length; i < l; i++) {
+		const Component = changes.componentsArray[i]
+		const position = current.componentsArray.indexOf(Component)
+		const isNew = position === -1
 
 		if (isNew) {
 			current.propsArray.push(changes.propsArray[i])
@@ -73,100 +67,67 @@ function mergePropsAndComponents(current, changes) {
 }
 
 function arrayDiff(previous, next) {
-	var diff = []
-
-	for (var i = 0, l = next.length; i < l; i++)
-		if (previous.indexOf(next[i]) === -1)
-			diff.push(next[i])
-
+	const diff = []
+	for (const value of next) {
+		if (previous.indexOf(value) === -1) {
+			diff.push(value)
+		}
+	}
 	return diff
 }
 
 function shallowEqual(a, b) {
-	var key
-	var ka = 0
-	var kb = 0
+	let same = 0
+	let count = 0
+	Object.keys(a).forEach(key => {
+		if (a[key] === b[key]) {
+			same++
+		}
+		count++
+	})
 
-	for (key in a) {
-		if (a.hasOwnProperty(key) && a[key] !== b[key])
-			return false
-		ka++
-	}
-
-	for (key in b)
-		if (b.hasOwnProperty(key))
-			kb++
-
-	return ka === kb
+	return same === count === Object.keys(b).length
 }
 
 function createElement(Component, props) {
-	if (Component.loadProps)
-		return <AsyncPropsContainer Component={Component} routerProps={props}/>
-	else
-		return <Component {...props}/>
+	if (Component.loadProps) {
+		return <AsyncPropsContainer Component={Component}
+			routerProps={props} />
+	} else {
+		return <Component {...props} />
+	}
 }
 
-export function loadPropsOnServer({ components, params }, cb) {
-	loadAsyncProps(
-		filterAndFlattenComponents(components),
-		params,
-		(err, propsAndComponents) => {
-			if (err) {
-				cb(err)
-			}
-			else {
-				const json = JSON.stringify(propsAndComponents.propsArray, null, 2)
-				const scriptString = `<script>__ASYNC_PROPS__ = ${json}</script>`
-				cb(null, propsAndComponents, scriptString)
-			}
-		}
-	)
+export function loadPropsOnServer({ components, params }) {
+	return loadAsyncProps(filterAndFlattenComponents(components), params)
 }
-
-function hydrate(props) {
-	if (typeof __ASYNC_PROPS__ !== 'undefined')
-		return {
-			propsArray: JSON.parse(__ASYNC_PROPS__),
-			componentsArray: filterAndFlattenComponents(props.components)
-		}
-	else
-		return null
-}
-
 
 class AsyncPropsContainer extends React.Component {
-
 	static propTypes = {
 		Component: func.isRequired,
-		routerProps: object.isRequired
+		routerProps: object.isRequired,
 	}
 
 	static contextTypes = {
-		asyncProps: object.isRequired
+		asyncProps: object.isRequired,
 	}
 
 	render() {
 		const { Component, routerProps } = this.props
-		const { propsAndComponents, loading, reloadComponent } = this.context.asyncProps
+		const { propsAndComponents, loading, reloadComponent } = this.context.
+			asyncProps
 		const asyncProps = lookupPropsForComponent(Component, propsAndComponents)
 		const reload = () => reloadComponent(Component)
 		return (
-			<Component
-				{...routerProps}
-				{...asyncProps}
-				reloadAsyncProps={reload}
-				loading={loading}
-			/>
+			<Component {...routerProps} {...asyncProps} reload={reload}
+				loading={loading} />
 		)
 	}
-
 }
 
 class AsyncProps extends React.Component {
-
 	static childContextTypes = {
-		asyncProps: object
+		asyncProps: object,
 	}
 
 	static propTypes = {
@@ -178,16 +139,12 @@ class AsyncProps extends React.Component {
 
 		// server rendering
 		propsArray: array,
-		componentsArray: array
+		componentsArray: array,
 	}
 
 	static defaultProps = {
-		onError(err) {
-			throw err
-		},
-		renderLoading() {
-			return null
-		}
+		onError: err => { throw err },
+		renderLoading: () => null,
 	}
 
 	constructor(props, context) {
@@ -198,8 +155,7 @@ class AsyncProps extends React.Component {
 			loading: false,
 			prevProps: null,
 			propsAndComponents: isServerRender ?
-				{ propsArray, componentsArray } :
-				hydrate(props)
+				{ propsArray, componentsArray } : null,
 		}
 	}
 
@@ -209,11 +165,9 @@ class AsyncProps extends React.Component {
 			asyncProps: {
 				loading,
 				propsAndComponents,
-				reloadComponent: (Component) => {
-					this.reloadComponent(Component)
-				},
-				reload: ::this.reload
-			}
+				reloadComponent: ::this.reloadComponent,
+				reload: ::this.reload,
+			},
 		}
 	}
 
@@ -224,32 +178,25 @@ class AsyncProps extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		const routeChanged = nextProps.location !== this.props.location
-		if (!routeChanged)
+		if (!routeChanged) {
 			return
-
+		}
 		const oldComponents = filterAndFlattenComponents(this.props.components)
 		const newComponents = filterAndFlattenComponents(nextProps.components)
 		let components = arrayDiff(oldComponents, newComponents)
-
 		if (components.length === 0) {
 			const sameComponents = shallowEqual(oldComponents, newComponents)
 			if (sameComponents) {
-				const paramsChanged = !shallowEqual(nextProps.params, this.props.params)
-				if (paramsChanged)
+				const paramsChanged = !shallowEqual(nextProps.params,
+					this.props.params)
+				if (paramsChanged) {
 					components = [ last(newComponents) ]
+				}
 			}
 		}
-
-		if (components.length > 0)
-			this.loadAsyncProps(components, nextProps.params, nextProps.location)
-	}
-
-	handleError(cb) {
-		return (err, ...args) => {
-			if (err && this.props.onError)
-				this.props.onError(err)
-			else
-				cb(null, ...args)
+		if (components.length > 0) {
+			this.loadAsyncProps(components, nextProps.params,
+				nextProps.location)
 		}
 	}
 
@@ -257,36 +204,35 @@ class AsyncProps extends React.Component {
 		this._unmounted = true
 	}
 
-	loadAsyncProps(components, params, location, options) {
+	async loadAsyncProps(components, params, location, options) {
 		this.setState({
 			loading: true,
-			prevProps: this.props
+			prevProps: this.props,
 		})
-		loadAsyncProps(
-			filterAndFlattenComponents(components),
-			params,
-			this.handleError((err, propsAndComponents) => {
-				const force = options && options.force
-				const sameLocation = this.props.location === location
-				// FIXME: next line has potential (rare) race conditions I think. If
-				// somebody calls reloadAsyncProps, changes location, then changes
-				// location again before its done and state gets out of whack (Rx folks
-				// are like "LOL FLAT MAP LATEST NEWB"). Will revisit later.
-				if ((force || sameLocation) && !this._unmounted) {
-					if (this.state.propsAndComponents) {
-						propsAndComponents = mergePropsAndComponents(
-							this.state.propsAndComponents,
-							propsAndComponents
-						)
-					}
-					this.setState({
-						loading: false,
-						propsAndComponents,
-						prevProps: null
-					})
-				}
+		const { onError } = this.props
+		let propsAndComponents = null
+		try {
+			propsAndComponents = await loadAsyncProps(filterAndFlattenComponents(components), params)
+		} catch (err) {
+			if (err && onError) {
+				onError(err)
+			}
+		}
+		const force = options && options.force
+		const sameLocation = this.props.location === location
+		if ((force || sameLocation) && !this._unmounted) {
+			if (this.state.propsAndComponents) {
+				propsAndComponents = mergePropsAndComponents(
+					this.state.propsAndComponents,
+					propsAndComponents
+				)
+			}
+			this.setState({
+				loading: false,
+				propsAndComponents,
+				prevProps: null,
 			})
-		)
+		}
 	}
 
 	reloadComponent(Component) {
@@ -300,16 +246,16 @@ class AsyncProps extends React.Component {
 	}
 
 	render() {
-		const { propsAndComponents } = this.state
+		const { propsAndComponents, loading, prevProps } = this.state
+		const { renderLoading } = this.props
 		if (!propsAndComponents) {
-			return this.props.renderLoading()
-		}
-		else {
-			const props = this.state.loading ? this.state.prevProps : this.props
-			return <RoutingContext {...props} createElement={createElement} />
+			return renderLoading()
+		} else {
+			const props = loading ? prevProps : this.props
+			return <RoutingContext {...props}
+				createElement={createElement} />
 		}
 	}
-
 }
 
 export default AsyncProps

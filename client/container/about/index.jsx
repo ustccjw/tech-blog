@@ -7,14 +7,9 @@ export default class AboutContainer extends React.Component {
 		resume: React.PropTypes.string,
 	}
 
-	static async loadProps(params, cb) {
-		try {
-			const resume = await dataModel.getValue(['resume'])
-			cb(null, { resume })
-		} catch (err) {
-			console.error(err)
-			cb(err)
-		}
+	static async loadProps(params) {
+		const resume = await dataModel.getValue(['resume'])
+		return { resume }
 	}
 
 	render() {
