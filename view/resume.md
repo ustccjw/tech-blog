@@ -69,7 +69,7 @@
 * 持续学习，对新技术有较大的好奇心和学习欲。
 
 [1]: https://github.com/ustccjw/Blog/issues/13
-[2]: https://github.com/ustccjw/tech-blog
+[2]: https://github.com/ustccjw/Blog/issues
 [3]: https://github.com/ustccjw/tech-blog
 [4]: https://github.com/ideal-react/auto-ellipsis
 [5]: https://github.com/ustccjw/editorconfig-validate
