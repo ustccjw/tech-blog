@@ -12,8 +12,8 @@ export default class Card extends React.Component {
 		const { article } = this.props
 		return (
 			<ideal-card>
-				<Markdown content={ article.introduction } />
-				<Link to={ `/articles/${article.number}/` }>View More</Link>
+				<Markdown content={article.introduction} />
+				<Link to={`/articles/${article.number}/`}>View More</Link>
 			</ideal-card>
 		)
 	}

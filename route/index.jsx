@@ -6,10 +6,10 @@ import Article from '../client/container/article'
 import About from '../client/container/about'
 
 export default (
-	<Route path="/" component={ App }>
-		<IndexRoute component={ ArticleList }/>
-		<Route path="articles/" component={ ArticleList } />
-		<Route path="articles/:number/" component={ Article } />
-		<Route path="about/" component={ About } />
+	<Route path="/" component={App}>
+		<IndexRoute component={ArticleList}/>
+		<Route path="articles/" component={ArticleList} />
+		<Route path="articles/:number/" component={Article} />
+		<Route path="about/" component={About} />
 	</Route>
 )

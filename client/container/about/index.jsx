@@ -15,6 +15,6 @@ export default class AboutContainer extends React.Component {
 	render() {
 		const { resume } = this.props
 		const props = { resume }
-		return <About { ...props } />
+		return <About {...props} />
 	}
 }

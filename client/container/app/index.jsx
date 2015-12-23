@@ -23,8 +23,8 @@ export default class AppContainer extends React.Component {
 		const props = { children, loading }
 		return (
 			<div>
-				<App { ...props } />
-				{ loading ? <Loading /> : null }
+				<App {...props} />
+				{loading ? <Loading /> : null}
 			</div>
 		)
 	}

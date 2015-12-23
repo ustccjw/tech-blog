@@ -32,7 +32,7 @@ export default class Markdown extends React.Component {
 		const { content, options } = this.props
 		const props = {
 			source: unsafeScript(content),
-			options: { ...CONFIG, ...options },
+			options: {...CONFIG, ...options},
 		}
 		return (
 			<ideal-markdown>

@@ -3,6 +3,6 @@
 import { uiModel } from '../../model'
 
 export const jumpPage = async page => {
-	await uiModel.setValue(['articleList', 'page'], page)
+	await uiModel.setValue([ 'articleList', 'page' ], page)
 	global.reload()
 }

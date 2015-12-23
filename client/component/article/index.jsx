@@ -11,7 +11,7 @@ export default class Article extends React.Component {
 		const { article } = this.props
 		return (
 			<ideal-article>
-				{ article ? <Markdown content={ article.content } /> : null }
+				{article ? <Markdown content={article.content} /> : null}
 			</ideal-article>
 		)
 	}

@@ -31,6 +31,6 @@ export default class ArticleListContainer extends React.Component {
 			totalPages,
 			articles: object2Array(articles),
 		}
-		return <ArticleList { ...props } />
+		return <ArticleList {...props} />
 	}
 }

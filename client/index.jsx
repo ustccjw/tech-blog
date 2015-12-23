@@ -11,8 +11,7 @@ global.React = React
 const history = useScroll(createHistory)()
 
 const router = (
-	<Router routes={ routes } history={ history }
-		RoutingContext={ AsyncProps } />
+	<Router routes={routes} history={history} RoutingContext={AsyncProps} />
 )
 
 ReactDOM.render(router, document.querySelector('.react-root'))

@@ -11,7 +11,7 @@ export default class About extends React.Component {
 		const { resume } = this.props
 		return (
 			<ideal-about>
-				{ resume ? <Markdown content={ resume } /> : null }
+				{resume ? <Markdown content={resume} /> : null}
 			</ideal-about>
 		)
 	}

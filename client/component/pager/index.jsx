@@ -20,21 +20,21 @@ export default class Pager extends React.Component {
 		const { title, handleChange, canPrev, canNext } = this.props
 		const { prev, next } = title
 		const prevComponent = canPrev ? (
-			<button href="#" onClick={ e => { handleChange('prev')} }>
-				{ prev }
+			<button href="#" onClick={e => handleChange('prev')}>
+				{prev}
 			</button>
 		) : null
 		const nextComponent = canNext ? (
-			<button href="#" onClick={ e => { handleChange('next')} }>
-				{ next }
+			<button href="#" onClick={e => handleChange('next')}>
+				{next}
 			</button>
 		) : null
 
 		return (
 			<ideal-pager>
 				<ul>
-					<li>{ prevComponent }</li>
-					<li>{ nextComponent }</li>
+					<li>{prevComponent}</li>
+					<li>{nextComponent}</li>
 				</ul>
 			</ideal-pager>
 		)

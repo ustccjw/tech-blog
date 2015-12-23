@@ -8,7 +8,7 @@ export default class ArticleList extends React.Component {
 	render() {
 		const { articles, page, totalPages } = this.props
 		const articleComponents = articles.map(article =>
-			<Card key={article.number} article={ article } />
+			<Card key={article.number} article={article} />
 		)
 		const handleChange = async type => {
 			if ('prev' === type) {
@@ -24,8 +24,8 @@ export default class ArticleList extends React.Component {
 		}
 		return (
 			<ideal-articlelist>
-				{ articleComponents }
-				<Pager { ...props } />
+				{articleComponents}
+				<Pager {...props} />
 			</ideal-articlelist>
 		)
 	}

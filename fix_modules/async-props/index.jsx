@@ -256,8 +256,7 @@ class AsyncProps extends React.Component {
 			return renderLoading()
 		} else {
 			const props = loading ? prevProps : this.props
-			return <RoutingContext {...props}
-				createElement={createElement} />
+			return <RoutingContext {...props} createElement={createElement} />
 		}
 	}
 }

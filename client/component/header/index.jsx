@@ -10,19 +10,19 @@ export default class Header extends React.Component {
 
 	render() {
 		const { title, links } = this.props
-		const linksComponent = links.map(({label, value}) => {
-			let link = <Link to={ value }>{ label }</Link>
+		const linksComponent = links.map(({ label, value }) => {
+			let link = <Link to={value}>{label}</Link>
 			if (value.startsWith('http')) {
-				link = <a href={ value } target='_blank'>{ label }</a>
+				link = <a href={value} target='_blank'>{label}</a>
 			}
-			return <li key={ label }>{ link }</li>
+			return <li key={label}>{link}</li>
 		})
 		return (
 			<ideal-header>
 				<header>
-					<h1>{ title }</h1>
+					<h1>{title}</h1>
 					<nav>
-						<ul>{ linksComponent }</ul>
+						<ul>{linksComponent}</ul>
 					</nav>
 				</header>
 			</ideal-header>

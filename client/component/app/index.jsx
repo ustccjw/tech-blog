@@ -35,7 +35,7 @@ export default class App extends React.Component {
 			<ideal-app>
 				<Header {...props} />
 				<article>
-					{ children }
+					{children}
 				</article>
 			</ideal-app>
 		)

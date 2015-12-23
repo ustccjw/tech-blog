@@ -19,6 +19,6 @@ export default class ArticleContainer extends React.Component {
 	render() {
 		const { article } = this.props
 		const props = { article }
-		return <Article { ...props } />
+		return <Article {...props} />
 	}
 }
