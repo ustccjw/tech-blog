@@ -1,6 +1,6 @@
 import React from 'react'
 import Article from '../../component/article'
-import { dataModel } from '../../../model'
+import { loadProps } from '../../action/article'
 
 export default class ArticleContainer extends React.Component {
 	static propTypes = {
@@ -8,13 +8,7 @@ export default class ArticleContainer extends React.Component {
 		article: React.PropTypes.object,
 	}
 
-	static async loadProps(params) {
-		const { number } = params
-		const content = await dataModel.getValue(['articleByNumber',
-			number, 'content'])
-		const article = { content }
-		return { article }
-	}
+	static loadProps = loadProps
 
 	render() {
 		const { article } = this.props

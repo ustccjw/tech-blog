@@ -1,16 +1,13 @@
 import React from 'react'
 import About from '../../component/about'
-import { dataModel } from '../../../model'
+import { loadProps } from '../../action/about'
 
 export default class AboutContainer extends React.Component {
 	static propTypes = {
 		resume: React.PropTypes.string,
 	}
 
-	static async loadProps(params) {
-		const resume = await dataModel.getValue(['resume'])
-		return { resume }
-	}
+	static loadProps = loadProps
 
 	render() {
 		const { resume } = this.props

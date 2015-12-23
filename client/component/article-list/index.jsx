@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from '../card'
 import Pager from '../pager'
-import { jumpPage } from '../../action/action-list'
+import { jumpPage } from '../../action/article-list'
 import './style'
 
 export default class ArticleList extends React.Component {
