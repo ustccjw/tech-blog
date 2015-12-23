@@ -6,10 +6,12 @@ if (process.env.NODE_ENV === 'development') {
 	url = 'http://127.0.0.1:3000/model.json'
 }
 
+// dataModel 按对象实体存储
 export const dataModel = new falcor.Model({
 	source: new HttpDataSource(url),
 })
 
+// uiModel 按 route component 存储
 export const uiModel = new falcor.Model({
 	cache: {
 		articleList: {

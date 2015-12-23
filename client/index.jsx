@@ -6,7 +6,7 @@ import useScroll from 'scroll-behavior/lib/useStandardScroll'
 import AsyncProps from 'async-props'
 import routes from '../route'
 
-window.React = React
+global.React = React
 
 const history = useScroll(createHistory)()
 

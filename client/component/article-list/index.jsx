@@ -1,33 +1,20 @@
 import React from 'react'
 import Card from '../card'
 import Pager from '../pager'
-import { uiModel } from '../../../model'
+import { jumpPage } from '../../action/action-list'
 import './style'
 
 export default class ArticleList extends React.Component {
-	static propTypes = {
-		page: React.PropTypes.number.isRequired,
-		articles: React.PropTypes.array.isRequired,
-		totalPages: React.PropTypes.number.isRequired,
-	}
-
-	static contextTypes = {
-		asyncProps: React.PropTypes.object.isRequired,
-	}
-
 	render() {
 		const { articles, page, totalPages } = this.props
-		const { reload } = this.context.asyncProps
 		const articleComponents = articles.map(article =>
 			<Card key={article.number} article={ article } />
 		)
 		const handleChange = async type => {
 			if ('prev' === type) {
-				await uiModel.setValue(['articleList', 'page'], page - 1)
-				reload()
+				jumpPage(page - 1)
 			} else if ('next' === type) {
-				await uiModel.setValue(['articleList', 'page'], page + 1)
-				reload()
+				jumpPage(page + 1)
 			}
 		}
 		const props = {

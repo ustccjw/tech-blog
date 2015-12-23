@@ -12,6 +12,11 @@ export default class AppContainer extends React.Component {
 		asyncProps: React.PropTypes.object.isRequired,
 	}
 
+	componentWillMount() {
+		const { reload } = this.context.asyncProps
+		global.reload = reload
+	}
+
 	render() {
 		const { children } = this.props
 		const { loading } = this.context.asyncProps
