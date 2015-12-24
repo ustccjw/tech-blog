@@ -5,6 +5,11 @@ const webpack = require('webpack')
 const autoprefixer = require('autoprefixer')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
+let root = __dirname
+if (__dirname.endsWith('/dev')) {
+	root = path.join(__dirname, '../')
+}
+
 module.exports = {
 	entry: [
 		'webpack-hot-middleware/client',
@@ -12,7 +17,7 @@ module.exports = {
 		'./client/index.jsx',
 	],
 	output: {
-		path: path.join(__dirname, 'dev'),
+		path: path.join(root, 'dev'),
 		filename: 'frontend.js',
 		publicPath: 'http://127.0.0.1:3000/',
 	},
@@ -47,7 +52,7 @@ module.exports = {
 			'process.env.NODE_ENV': JSON.stringify('development'),
 		}),
 		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
-			path.join(__dirname, '../fix_modules/async-props/index.jsx')),
+			path.join(root, 'fix_modules/async-props/index.jsx')),
 	],
 	devtool: 'inline-source-map',
 }

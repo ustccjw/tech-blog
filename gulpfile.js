@@ -6,7 +6,6 @@ const gulp = require('gulp')
 const webpack = require('webpack')
 const del = require('del')
 const backendConfig = require('./webpack.config.backend')
-const frontendConfig = require('./webpack.config.frontend')
 const productionConfig = require('./webpack.config.production')
 
 gulp.task('clean-dev', () => del([backendConfig.output.path]))
