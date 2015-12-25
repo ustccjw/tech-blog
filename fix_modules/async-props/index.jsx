@@ -116,14 +116,6 @@ class AsyncPropsContainer extends React.Component {
 		asyncProps: object.isRequired,
 	}
 
-	componentWillReceiveProps(nextProps) {
-		const paramsChanged = !shallowEqual(nextProps.routerProps.routeParams,
-			this.props.routerProps.routeParams)
-		if (paramsChanged) {
-			this.context.asyncProps.reloadComponent(nextProps.Component)
-		}
-	}
-
 	render() {
 		const { Component, routerProps } = this.props
 		const { propsAndComponents, loading, reloadComponent } = this.context.
@@ -190,6 +182,7 @@ class AsyncProps extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
+		console.log(this.props, nextProps)
 		const routeChanged = nextProps.location !== this.props.location
 		if (!routeChanged) {
 			return
