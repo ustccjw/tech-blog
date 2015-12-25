@@ -228,9 +228,7 @@ class AsyncProps extends React.Component {
 		if ((force || sameLocation) && !this._unmounted) {
 			if (this.state.propsAndComponents) {
 				propsAndComponents = mergePropsAndComponents(
-					this.state.propsAndComponents,
-					propsAndComponents
-				)
+					this.state.propsAndComponents, propsAndComponents)
 			}
 			this.setState({
 				loading: false,
