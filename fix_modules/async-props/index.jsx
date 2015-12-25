@@ -182,7 +182,6 @@ class AsyncProps extends React.Component {
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(this.props, nextProps)
 		const routeChanged = nextProps.location !== this.props.location
 		if (!routeChanged) {
 			return
