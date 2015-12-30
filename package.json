@@ -57,8 +57,7 @@
     "response-time": "^2.3.1",
     "scroll-behavior": "^0.3.0",
     "serve-favicon": "^2.3.0",
-    "serve-static": "^1.10.0",
-    "touch": "^1.0.0"
+    "serve-static": "^1.10.0"
   },
   "devDependencies": {
     "autoprefixer": "^6.1.0",

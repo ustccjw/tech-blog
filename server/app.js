@@ -9,7 +9,6 @@ import multer from 'multer'
 import cookieParser from 'cookie-parser'
 import responseTime from 'response-time'
 import compression from 'compression'
-import touch from 'touch'
 
 const upload = multer()
 const app = express()
@@ -25,21 +24,8 @@ logger.token('date', () => new Date().toString())
 // logger
 if ('production' === app.get('env')) {
 	const logPath = path.join(app.get('ROOT'), 'access.log')
-	fs.exists(logPath, exists => {
-		let accessLogStream = null
-		if (!exists) {
-			touch(logPath, (err, res) => {
-				if (err) {
-					throw err
-				}
-				accessLogStream = fs.createWriteStream(logPath, { flags: 'a' })
-				app.use(logger('combined', { stream: accessLogStream }))
-			})
-		} else {
-			accessLogStream = fs.createWriteStream(logPath, { flags: 'a' })
-			app.use(logger('combined', { stream: accessLogStream }))
-		}
-	})
+	const accessLogStream = fs.createWriteStream(logPath, { flags: 'a' })
+	app.use(logger('combined', { stream: accessLogStream }))
 } else {
 	app.use(logger('dev'))
 }
