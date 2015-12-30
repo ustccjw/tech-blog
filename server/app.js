@@ -9,6 +9,7 @@ import multer from 'multer'
 import cookieParser from 'cookie-parser'
 import responseTime from 'response-time'
 import compression from 'compression'
+import touch from 'touch'
 
 const upload = multer()
 const app = express()
@@ -27,7 +28,7 @@ if ('production' === app.get('env')) {
 	fs.exists(logPath, exists => {
 		let accessLogStream = null
 		if (!exists) {
-			fs.mkdir(logPath, (err, res) => {
+			touch(logPath, (err, res) => {
 				if (err) {
 					throw err
 				}
