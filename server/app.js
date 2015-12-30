@@ -24,8 +24,18 @@ logger.token('date', () => new Date().toString())
 // logger
 if ('production' === app.get('env')) {
 	const logPath = path.join(app.get('ROOT'), 'access.log')
-	const accessLogStream = fs.createWriteStream(logPath, { flags: 'a' })
-	app.use(logger('combined', { stream: accessLogStream }))
+	fs.exists(logPath, exists => {
+		let accessLogStream = null
+		if (!exists) {
+			fs.mkdir(logPath, () => {
+				accessLogStream = fs.createWriteStream(logPath, { flags: 'a' })
+				app.use(logger('combined', { stream: accessLogStream }))
+			})
+		} else {
+			accessLogStream = fs.createWriteStream(logPath, { flags: 'a' })
+			app.use(logger('combined', { stream: accessLogStream }))
+		}
+	})
 } else {
 	app.use(logger('dev'))
 }
