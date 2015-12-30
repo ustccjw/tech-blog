@@ -22,7 +22,7 @@ const BaseRouter = Router.createClass([{
 						})
 						result.push({
 							path: ['articles', from + index],
-							value: getObjectByKeys(article, pathSet.props),
+							value: $ref(['articleByNumber', article.number]),
 						})
 					}))
 		})
