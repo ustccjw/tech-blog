@@ -27,7 +27,10 @@ if ('production' === app.get('env')) {
 	fs.exists(logPath, exists => {
 		let accessLogStream = null
 		if (!exists) {
-			fs.mkdir(logPath, () => {
+			fs.mkdir(logPath, (err, res) => {
+				if (err) {
+					throw err
+				}
 				accessLogStream = fs.createWriteStream(logPath, { flags: 'a' })
 				app.use(logger('combined', { stream: accessLogStream }))
 			})
