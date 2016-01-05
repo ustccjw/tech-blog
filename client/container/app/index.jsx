@@ -7,6 +7,8 @@ import './style'
 export default class AppContainer extends React.Component {
 	static propTypes = {
 		children: React.PropTypes.any,
+		loading: React.PropTypes.bool.isRequired,
+		reload: React.PropTypes.func.isRequired,
 	}
 
 	static contextTypes = {
