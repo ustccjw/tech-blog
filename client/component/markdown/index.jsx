@@ -2,6 +2,7 @@ import React from 'react'
 import Remarkable from 'react-remarkable'
 import hljs from 'highlight.js'
 import { unsafeScript } from '../../../util'
+import 'highlight.js/styles/github'
 import './style'
 
 const CONFIG = {
