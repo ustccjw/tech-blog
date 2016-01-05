@@ -36,11 +36,7 @@ async function loadAsyncProps(components, params) {
 			componentsArray[index] = Component
 		})
 	})
-	try {
-		await* tasks
-	} catch (err) {
-		console.error('async props load failed')
-	}
+	await* tasks
 	return { componentsArray, propsArray }
 }
 
