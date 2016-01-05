@@ -114,11 +114,9 @@ class AsyncPropsContainer extends React.Component {
 
 	render() {
 		const { Component, routerProps } = this.props
-		const { propsAndComponents, loading, reloadComponent } = this.context.
-			asyncProps
+		const { propsAndComponents, loading, reload } = this.context.asyncProps
 		const asyncProps = lookupPropsForComponent(Component,
 			propsAndComponents)
-		const reload = () => reloadComponent(Component)
 		return (
 			<Component {...routerProps} {...asyncProps} reload={reload}
 				loading={loading} />
@@ -166,7 +164,6 @@ class AsyncProps extends React.Component {
 			asyncProps: {
 				loading,
 				propsAndComponents,
-				reloadComponent: ::this.reloadComponent,
 				reload: ::this.reload,
 			},
 		}
@@ -229,11 +226,6 @@ class AsyncProps extends React.Component {
 				prevProps: null,
 			})
 		}
-	}
-
-	reloadComponent(Component) {
-		const { params } = this.props
-		this.loadAsyncProps([ Component ], params, null, { force: true })
 	}
 
 	reload() {
