@@ -205,9 +205,9 @@ class AsyncProps extends React.Component {
 		try {
 			propsAndComponents = await loadAsyncProps(filterAndFlattenComponents(components), params)
 		} catch (err) {
-			if (err && onError) {
-				onError(err)
-			}
+			this.setState({ loading: false })
+			onError(err)
+			return
 		}
 		const force = options && options.force
 		const sameLocation = this.props.location === location
@@ -235,7 +235,7 @@ class AsyncProps extends React.Component {
 		if (!propsAndComponents) {
 			return renderLoading()
 		} else {
-			const props = loading ? prevProps : this.props
+			const props = prevProps || this.props
 			return <RoutingContext {...props} createElement={createElement} />
 		}
 	}
