@@ -4,13 +4,7 @@ import './style'
 
 export default class App extends React.Component {
 	static propTypes = {
-		loading: React.PropTypes.bool.isRequired,
 		children: React.PropTypes.any,
-	}
-
-	shouldComponentUpdate(nextProps, nextState) {
-		const { loading } = nextProps
-		return !loading
 	}
 
 	render() {

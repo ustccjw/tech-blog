@@ -1,6 +1,7 @@
 import React from 'react'
 import App from '../../component/app'
-import Loading from '../../component/loading'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 import './style'
 
 export default class AppContainer extends React.Component {
@@ -12,20 +13,27 @@ export default class AppContainer extends React.Component {
 		asyncProps: React.PropTypes.object.isRequired,
 	}
 
+	static loadProps = async () => {}
+
 	componentWillMount() {
-		const { reload } = this.context.asyncProps
+		const { reload } = this.props
 		global.reload = reload
+	}
+
+	shouldComponentUpdate(nextProps) {
+		const { loading } = nextProps
+		if (loading) {
+			NProgress.start()
+			return false
+		} else {
+			NProgress.done()
+			return true
+		}
 	}
 
 	render() {
 		const { children } = this.props
-		const { loading } = this.context.asyncProps
-		const props = { children, loading }
-		return (
-			<div>
-				<App {...props} />
-				{loading ? <Loading /> : null}
-			</div>
-		)
+		const props = { children }
+		return <App {...props} />
 	}
 }
