@@ -3,10 +3,6 @@ import RoutingContext from 'react-router/lib/RoutingContext'
 
 const { array, func, object } = React.PropTypes
 
-function last(arr) {
-	return arr[arr.length - 1]
-}
-
 function eachComponents(components, iterator) {
 	components.forEach(value => {
 		if (typeof value === 'object') {
