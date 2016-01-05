@@ -192,7 +192,7 @@ class AsyncProps extends React.Component {
 		const paramsChanged = !shallowEqual(nextProps.params,
 			this.props.params)
 		if (paramsChanged) {
-			components = [ newComponents ]
+			components = newComponents
 		} else {
 			components = arrayDiff(oldComponents, newComponents)
 		}
