@@ -188,16 +188,13 @@ class AsyncProps extends React.Component {
 		}
 		const oldComponents = filterAndFlattenComponents(this.props.components)
 		const newComponents = filterAndFlattenComponents(nextProps.components)
-		let components = arrayDiff(oldComponents, newComponents)
-		if (components.length === 0) {
-			const sameComponents = shallowEqual(oldComponents, newComponents)
-			if (sameComponents) {
-				const paramsChanged = !shallowEqual(nextProps.params,
-					this.props.params)
-				if (paramsChanged) {
-					components = [ last(newComponents) ]
-				}
-			}
+		let components = []
+		const paramsChanged = !shallowEqual(nextProps.params,
+			this.props.params)
+		if (paramsChanged) {
+			components = [ newComponents ]
+		} else {
+			components = arrayDiff(oldComponents, newComponents)
 		}
 		if (components.length > 0) {
 			this.loadAsyncProps(components, nextProps.params,
