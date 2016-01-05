@@ -56,7 +56,6 @@
     "react-remarkable": "^1.1.1",
     "react-router": "^1.0.0",
     "response-time": "^2.3.1",
-    "scroll-behavior": "^0.3.0",
     "serve-favicon": "^2.3.0",
     "serve-static": "^1.10.0"
   },
