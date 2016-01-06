@@ -9,21 +9,23 @@ import multer from 'multer'
 import cookieParser from 'cookie-parser'
 import responseTime from 'response-time'
 import compression from 'compression'
+import errorHandler from 'errorhandler'
+import route from './route'
+import frontMiddleware from './front-middleware'
+import { ENV, ROOT } from './config'
 
 const upload = multer()
 const app = express()
 export default app
 
-app.set('PORT', process.env.PORT || 3000)
-app.set('ROOT', path.join(__dirname, '../'))
 app.set('etag', false)
 app.enable('trust proxy')
 
 logger.token('date', () => new Date().toString())
 
 // logger
-if ('production' === app.get('env')) {
-	const logPath = path.join(app.get('ROOT'), 'access.log')
+if ('production' === ENV) {
+	const logPath = path.join(ROOT, 'access.log')
 	const accessLogStream = fs.createWriteStream(logPath, { flags: 'a' })
 	app.use(logger('combined', { stream: accessLogStream }))
 } else {
@@ -50,3 +52,16 @@ app.use(responseTime())
 
 // compress
 app.use(compression())
+
+// error handle last
+if ('development' === ENV) {
+	app.use(errorHandler())
+}
+
+// frontend webpack watch
+if ('development' === ENV) {
+	frontMiddleware(app)
+}
+
+// route
+route(app)

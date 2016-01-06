@@ -1,19 +1,20 @@
 import http from 'http'
-import tempApp from './'
+import tmpApp from './app'
+import { PORT } from './config'
 
-let app = tempApp
+let app = tmpApp
 const server = http.createServer()
 server.on('request', app)
-server.listen(app.get('PORT'), () =>
-	console.log('Express server listening on port ' + app.get('PORT')))
+server.listen(PORT, () =>
+	console.log('Express server listening on port ' + PORT))
 
 export default server
 
 if (module.hot) {
-	module.hot.accept('./', () => {
+	module.hot.accept('./app', () => {
 		let hotApp = null
 		try {
-			hotApp = require('./')
+			hotApp = require('./app')
 		} catch (error) {
 			console.error(error.stack)
 			return

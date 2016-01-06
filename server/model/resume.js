@@ -1,7 +1,7 @@
 import path from 'path'
 import fs from 'mz/fs'
 import { redis } from '../db'
-import app from '../app'
+import { ROOT } from '../config'
 
 export default class Resume {
 	static get() {
@@ -10,8 +10,8 @@ export default class Resume {
 
 	static async init() {
 		redis.del('resume')
-		const resume = await fs.readFile(path.join(app.get('ROOT'),
-			'view/resume.md'))
+		const filePath = path.join(ROOT, 'view/resume.md')
+		const resume = await fs.readFile(filePath)
 		redis.set('resume', resume.toString())
 	}
 }

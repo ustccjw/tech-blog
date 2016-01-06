@@ -2,7 +2,7 @@ import falcor from 'falcor'
 import HttpDataSource from 'falcor-http-datasource'
 
 let url = '/model.json'
-if (process.env.NODE_ENV === 'development') {
+if ('development' === process.env.NODE_ENV) {
 	url = 'http://127.0.0.1:3000/model.json'
 }
 

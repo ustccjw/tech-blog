@@ -8,9 +8,9 @@ const del = require('del')
 const backendConfig = require('./webpack.config.backend')
 const productionConfig = require('./webpack.config.production')
 
-gulp.task('clean-dev', () => del([backendConfig.output.path]))
-gulp.task('clean-build', () => del([productionConfig.backend.output.path,
-	productionConfig.frontend.output.path]))
+gulp.task('clean-dev', () => del([ backendConfig.output.path ]))
+gulp.task('clean-build', () => del([ productionConfig.backend.output.path,
+	productionConfig.frontend.output.path ]))
 
 gulp.task('backend-watch', done => {
 	let fireDone = false
@@ -25,7 +25,7 @@ gulp.task('backend-watch', done => {
 
 gulp.task('server-start', done => {
 	const entry = path.join(__dirname, 'dev/backend')
-	const server = spawn('node', [entry])
+	const server = spawn('node', [ entry ])
 	server.stdout.on('data', data =>
 		process.stdout.write(data)
 	)
@@ -60,7 +60,7 @@ const outputOptions = {
 	cached: false,
 	cachedAssets: false,
 	colors: true,
-	exclude: ['node_modules'],
+	exclude: [ 'node_modules' ],
 }
 
 function onBuild(err, stats) {
