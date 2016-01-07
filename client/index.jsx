@@ -9,8 +9,10 @@ global.React = React
 
 const history = createHistory()
 
+// onError: loadProps error
 const router = (
-	<Router routes={routes} history={history} RoutingContext={AsyncProps} />
+	<Router routes={routes} history={history} RoutingContext={AsyncProps}
+		onError={err => console.error(err)} />
 )
 
 ReactDOM.render(router, document.querySelector('.react-root'))

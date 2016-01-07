@@ -1,11 +1,17 @@
 // action 按照 route component 划分
+// action 最后会触发 reload 完成页面 rerender
+// action 是异步的，可以实现 action 执行序列化
 
 import { dataModel, uiModel } from '../../model'
 import { PAGE_SIZE } from '../config'
 
 export const jumpPage = async page => {
-	await uiModel.setValue([ 'articleList', 'page' ], page)
-	global.reload()
+	try {
+		await uiModel.setValue([ 'articleList', 'page' ], page)
+	} catch (err) {
+		console.error(err)
+	}
+	return global.reload()
 }
 
 export const loadProps = async params => {

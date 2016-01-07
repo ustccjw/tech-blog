@@ -226,7 +226,8 @@ class AsyncProps extends React.Component {
 
 	reload() {
 		const { components, params, location } = this.props
-		this.loadAsyncProps(components, params, location, { force: true })
+		return this.loadAsyncProps(components, params, location,
+			{ force: true })
 	}
 
 	render() {
