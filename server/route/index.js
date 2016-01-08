@@ -31,6 +31,9 @@ const route = app => {
 		match({ routes, location: req.url },
 			async (err, redirect, renderProps) => {
 			try {
+				if (err) {
+					throw err
+				}
 				const asyncProps = await loadPropsOnServer(renderProps)
 				const props = { ...renderProps, ...asyncProps }
 				const appHTML = renderToString(React.createElement(AsyncProps,

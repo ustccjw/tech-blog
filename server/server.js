@@ -15,8 +15,8 @@ if (module.hot) {
 		let hotApp = null
 		try {
 			hotApp = require('./app')
-		} catch (error) {
-			console.error(error.stack)
+		} catch (err) {
+			console.error(err.stack)
 			return
 		}
 		server.removeListener('request', app)
