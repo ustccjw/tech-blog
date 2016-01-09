@@ -9,13 +9,13 @@ export default class AppContainer extends React.Component {
 		children: React.PropTypes.any,
 		loading: React.PropTypes.bool.isRequired,
 		reload: React.PropTypes.func.isRequired,
-	}
+	};
 
 	static contextTypes = {
 		asyncProps: React.PropTypes.object.isRequired,
-	}
+	};
 
-	static loadProps = async () => {}
+	static loadProps = async () => {};
 
 	componentWillMount() {
 		const { reload } = this.props

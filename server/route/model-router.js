@@ -26,7 +26,7 @@ const BaseRouter = Router.createClass([{
 						})
 					}))
 		})
-		await* tasks
+		await Promise.all(tasks)
 		return result
 	},
 }, {

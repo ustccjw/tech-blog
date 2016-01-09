@@ -1,7 +1,9 @@
 import path from 'path'
 import fs from 'mz/fs'
-import { redis } from '../db'
+import db from '../db'
 import { ROOT } from '../config'
+
+const { redis } = db
 
 export default class Resume {
 	static get() {

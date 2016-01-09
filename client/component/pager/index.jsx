@@ -7,14 +7,14 @@ export default class Pager extends React.Component {
 		handleChange: React.PropTypes.func.isRequired,
 		canPrev: React.PropTypes.bool.isRequired,
 		canNext: React.PropTypes.bool.isRequired,
-	}
+	};
 
 	static defaultProps = {
 		title: {
 			prev: '上一页',
 			next: '下一页',
 		},
-	}
+	};
 
 	render() {
 		const { title, handleChange, canPrev, canNext } = this.props

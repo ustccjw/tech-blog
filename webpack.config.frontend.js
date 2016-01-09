@@ -13,7 +13,7 @@ if (__dirname.endsWith('/dev')) {
 module.exports = {
 	entry: [
 		'webpack-hot-middleware/client',
-		'babel-core/polyfill',
+		'babel-polyfill',
 		'./client/index.jsx',
 	],
 	output: {

@@ -53,7 +53,7 @@ exports.backend = {
 
 exports.frontend = {
 	entry: [
-		'babel-core/polyfill',
+		'babel-polyfill',
 		'./client/index.jsx',
 	],
 	output: {

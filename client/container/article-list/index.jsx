@@ -8,9 +8,9 @@ export default class ArticleListContainer extends React.Component {
 		page: React.PropTypes.number.isRequired,
 		articles: React.PropTypes.object.isRequired,
 		totalPages: React.PropTypes.number.isRequired,
-	}
+	};
 
-	static loadProps = loadProps
+	static loadProps = loadProps;
 
 	render() {
 		const { page, articles, totalPages } = this.props

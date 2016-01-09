@@ -1,5 +1,7 @@
-import { redis } from '../db'
+import db from '../db'
 import { githubService } from '../service/'
+
+const { redis } = db
 
 export default class Article {
 	static get(start, stop=start) {

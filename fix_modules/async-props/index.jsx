@@ -36,7 +36,7 @@ async function loadAsyncProps(components, params) {
 			componentsArray[index] = Component
 		})
 	})
-	await* tasks
+	await Promise.all(tasks)
 	return { componentsArray, propsArray }
 }
 
@@ -102,11 +102,11 @@ class AsyncPropsContainer extends React.Component {
 	static propTypes = {
 		Component: func.isRequired,
 		routerProps: object.isRequired,
-	}
+	};
 
 	static contextTypes = {
 		asyncProps: object.isRequired,
-	}
+	};
 
 	render() {
 		const { Component, routerProps } = this.props
@@ -123,7 +123,7 @@ class AsyncPropsContainer extends React.Component {
 class AsyncProps extends React.Component {
 	static childContextTypes = {
 		asyncProps: object,
-	}
+	};
 
 	static propTypes = {
 		components: array.isRequired,
@@ -135,12 +135,12 @@ class AsyncProps extends React.Component {
 		// server rendering
 		propsArray: array,
 		componentsArray: array,
-	}
+	};
 
 	static defaultProps = {
 		onError: err => { throw err },
 		renderLoading: () => null,
-	}
+	};
 
 	constructor(props, context) {
 		super(props, context)
