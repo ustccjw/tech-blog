@@ -1,5 +1,5 @@
 import React from 'react'
-import RoutingContext from 'react-router/lib/RoutingContext'
+import RouterContext from 'react-router/lib/RouterContext'
 
 const { array, func, object } = React.PropTypes
 
@@ -140,6 +140,8 @@ class AsyncProps extends React.Component {
 	static defaultProps = {
 		onError: err => { throw err },
 		renderLoading: () => null,
+		render: props => <RouterContext {...props}
+			createElement={createElement} />,
 	};
 
 	constructor(props, context) {
@@ -237,7 +239,7 @@ class AsyncProps extends React.Component {
 			return renderLoading()
 		} else {
 			const props = prevProps || this.props
-			return <RoutingContext {...props} createElement={createElement} />
+			return this.props.render(props)
 		}
 	}
 }
