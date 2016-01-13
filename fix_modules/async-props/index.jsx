@@ -62,29 +62,6 @@ function mergePropsAndComponents(current, changes) {
 	return current
 }
 
-function arrayDiff(previous, next) {
-	const diff = []
-	for (const value of next) {
-		if (previous.indexOf(value) === -1) {
-			diff.push(value)
-		}
-	}
-	return diff
-}
-
-function shallowEqual(a, b) {
-	let same = 0
-	let count = 0
-	Object.keys(a).forEach(key => {
-		if (a[key] === b[key]) {
-			same++
-		}
-		count++
-	})
-
-	return same === count === Object.keys(b).length
-}
-
 function createElement(Component, props) {
 	if (Component.loadProps) {
 		return <AsyncPropsContainer Component={Component}
@@ -177,16 +154,7 @@ class AsyncProps extends React.Component {
 		if (!routeChanged) {
 			return
 		}
-		const oldComponents = filterAndFlattenComponents(this.props.components)
-		const newComponents = filterAndFlattenComponents(nextProps.components)
-		let components = []
-		const paramsChanged = !shallowEqual(nextProps.params,
-			this.props.params)
-		if (paramsChanged) {
-			components = newComponents
-		} else {
-			components = arrayDiff(oldComponents, newComponents)
-		}
+		const components = filterAndFlattenComponents(nextProps.components)
 		if (components.length > 0) {
 			this.loadAsyncProps(components, nextProps.params,
 				nextProps.location)
