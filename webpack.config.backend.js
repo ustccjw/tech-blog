@@ -48,5 +48,5 @@ module.exports = {
 			path.join(__dirname, 'fix_modules/async-props/index.jsx')),
 	],
 	externals: nodeModules,
-	devtool: 'sourcemap',
+	devtool: 'source-map',
 }
