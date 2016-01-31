@@ -14,7 +14,7 @@ if (module.hot) {
 	module.hot.accept('./app', () => {
 		let hotApp = null
 		try {
-			hotApp = require('./app')
+			hotApp = require('./app').default
 		} catch (err) {
 			console.error(err.stack)
 			return
