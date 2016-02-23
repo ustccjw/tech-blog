@@ -5,7 +5,7 @@ import './style'
 export default class About extends React.Component {
 	static propTypes = {
 		resume: React.PropTypes.string.isRequired,
-	};
+	}
 
 	render() {
 		const { resume } = this.props

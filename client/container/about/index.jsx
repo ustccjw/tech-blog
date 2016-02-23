@@ -5,9 +5,9 @@ import { loadProps } from '../../action/about'
 export default class AboutContainer extends React.Component {
 	static propTypes = {
 		resume: React.PropTypes.string,
-	};
+	}
 
-	static loadProps = loadProps;
+	static loadProps = loadProps
 
 	render() {
 		const { resume } = this.props

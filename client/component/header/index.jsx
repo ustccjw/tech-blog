@@ -6,7 +6,7 @@ export default class Header extends React.Component {
 	static propTypes = {
 		title: React.PropTypes.string.isRequired,
 		links: React.PropTypes.array.isRequired,
-	};
+	}
 
 	render() {
 		const { title, links } = this.props

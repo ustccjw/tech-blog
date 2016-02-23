@@ -6,9 +6,9 @@ export default class ArticleContainer extends React.Component {
 	static propTypes = {
 		params: React.PropTypes.object,
 		article: React.PropTypes.object,
-	};
+	}
 
-	static loadProps = loadProps;
+	static loadProps = loadProps
 
 	render() {
 		const { article } = this.props

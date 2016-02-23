@@ -22,6 +22,7 @@ export const loadProps = async params => {
 		[ 'number', 'introduction' ] ], [ 'articles', 'length' ])
 	const { articles } = response.json
 	const length = articles.length
+	delete articles.$__path
 	delete articles.length
 	const totalPages = Math.ceil(length / PAGE_SIZE)
 	return { articles, page, totalPages }

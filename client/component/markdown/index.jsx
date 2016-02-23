@@ -27,7 +27,7 @@ export default class Markdown extends React.Component {
 	static propTypes = {
 		content: React.PropTypes.string.isRequired,
 		options: React.PropTypes.object,
-	};
+	}
 
 	render() {
 		const { content, options } = this.props

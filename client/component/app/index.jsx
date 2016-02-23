@@ -5,7 +5,7 @@ import './style'
 export default class App extends React.Component {
 	static propTypes = {
 		children: React.PropTypes.any,
-	};
+	}
 
 	render() {
 		const { children } = this.props
