@@ -13,6 +13,7 @@ module.exports = {
 	target: 'node',
 	entry: [
 		'webpack/hot/poll?1000',
+		'babel-polyfill',
 		'./server/server.js',
 	],
 	output: {
@@ -20,7 +21,7 @@ module.exports = {
 		filename: 'backend.js',
 	},
 	resolve: {
-		extensions: ['', '.jsx', '.js', '.scss', '.css'],
+		extensions: ['', '.jsx', '.js', '.css'],
 	},
 	node: {
 		__filename: true,
@@ -42,10 +43,8 @@ module.exports = {
 			raw: true,
 			entryOnly: false,
 		}),
-		new webpack.NormalModuleReplacementPlugin(/(\.scss|\.css)$/,
+		new webpack.NormalModuleReplacementPlugin(/\.css$/,
 			path.join(__dirname, 'node_modules/node-noop/index.js')),
-		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
-			path.join(__dirname, 'fix_modules/async-props/index.jsx')),
 	],
 	externals: nodeModules,
 	devtool: 'source-map',

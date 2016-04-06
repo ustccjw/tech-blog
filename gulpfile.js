@@ -56,16 +56,8 @@ gulp.task('dev', gulp.series('clean-dev', 'backend-watch', 'server-start'))
 gulp.task('build', gulp.series('clean-build', 'backend-build',
 	'frontend-build'))
 
-const outputOptions = {
-	cached: false,
-	cachedAssets: false,
-	colors: true,
-	exclude: [ 'node_modules' ],
-}
-
 function onBuild(err, stats) {
 	if (err) {
 		throw new Error(err)
 	}
-	console.log('----------\n', stats.toString(outputOptions), '\n----------')
 }

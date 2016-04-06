@@ -25,13 +25,13 @@ function filterAndFlattenComponents(components) {
 	return flattened
 }
 
-async function loadAsyncProps(components, params) {
+async function loadAsyncProps(components, params, location) {
 
 	// flatten the multi-component routes
 	const componentsArray = []
 	const propsArray = []
 	const tasks = components.map((Component, index) => {
-		return Component.loadProps(params).then(props => {
+		return Component.loadProps(params, location).then(props => {
 			propsArray[index] = props
 			componentsArray[index] = Component
 		})
@@ -71,8 +71,9 @@ function createElement(Component, props) {
 	}
 }
 
-export function loadPropsOnServer({ components, params }) {
-	return loadAsyncProps(filterAndFlattenComponents(components), params)
+export function loadPropsOnServer({ components, params, location }) {
+	return loadAsyncProps(filterAndFlattenComponents(components), params,
+		location)
 }
 
 class AsyncPropsContainer extends React.Component {
@@ -151,13 +152,9 @@ class AsyncProps extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		const routeChanged = nextProps.location !== this.props.location
-		if (!routeChanged) {
-			return
-		}
-		const components = filterAndFlattenComponents(nextProps.components)
-		if (components.length > 0) {
-			this.loadAsyncProps(components, nextProps.params,
-				nextProps.location)
+		if (routeChanged) {
+			const { components, params, location } = nextProps
+			this.loadAsyncProps(components, params, location)
 		}
 	}
 
@@ -173,7 +170,7 @@ class AsyncProps extends React.Component {
 		const { onError } = this.props
 		let propsAndComponents = null
 		try {
-			propsAndComponents = await loadAsyncProps(filterAndFlattenComponents(components), params)
+			propsAndComponents = await loadAsyncProps(filterAndFlattenComponents(components), params, location)
 		} catch (err) {
 			this.setState({ loading: false })
 			onError(err)
@@ -194,7 +191,10 @@ class AsyncProps extends React.Component {
 		}
 	}
 
-	reload() {
+	reload(actionInfo) {
+		if ('development' === process.env.NODE_ENV) {
+			console.info(actionInfo)
+		}
 		const { components, params, location } = this.props
 		return this.loadAsyncProps(components, params, location,
 			{ force: true })

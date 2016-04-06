@@ -1,41 +1,38 @@
 import React from 'react'
 import App from '../../component/app'
 import NProgress from 'nprogress'
-import 'nprogress/nprogress.css'
+
 import './style'
 
+import { loadProps } from '../../action/app'
+
 export default class AppContainer extends React.Component {
-	static propTypes = {
-		children: React.PropTypes.any,
-		loading: React.PropTypes.bool.isRequired,
-		reload: React.PropTypes.func.isRequired,
-	}
+  static propTypes = {
+    children: React.PropTypes.any.isRequired,
+    loading: React.PropTypes.bool.isRequired,
+    reload: React.PropTypes.func.isRequired,
+  }
 
-	static contextTypes = {
-		asyncProps: React.PropTypes.object.isRequired,
-	}
+  static loadProps = loadProps
 
-	static loadProps = async () => {}
+  componentWillMount() {
+    const { reload } = this.props
+    global.reload = reload
+  }
 
-	componentWillMount() {
-		const { reload } = this.props
-		global.reload = reload
-	}
+  componentWillReceiveProps(nextProps) {
+    const { loading } = nextProps
+    loading ? NProgress.start() : NProgress.done()
+  }
 
-	shouldComponentUpdate(nextProps) {
-		const { loading } = nextProps
-		if (loading) {
-			NProgress.start()
-			return false
-		} else {
-			NProgress.done()
-			return true
-		}
-	}
+  shouldComponentUpdate(nextProps) {
+    const { loading } = nextProps
+    return !loading
+  }
 
-	render() {
-		const { children } = this.props
-		const props = { children }
-		return <App {...props} />
-	}
+  render() {
+    const { children } = this.props
+    const appProps = { children }
+    return <App {...appProps} />
+  }
 }

@@ -3,7 +3,6 @@
 const path = require('path')
 const fs = require('fs')
 const webpack = require('webpack')
-const autoprefixer = require('autoprefixer')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 
 const nodeModules = {}
@@ -14,6 +13,7 @@ fs.readdirSync('node_modules').
 exports.backend = {
 	target: 'node',
 	entry: [
+		'babel-polyfill',
 		'./server/server.js',
 	],
 	output: {
@@ -21,7 +21,7 @@ exports.backend = {
 		filename: 'backend.js',
 	},
 	resolve: {
-		extensions: ['', '.jsx', '.js', '.scss', '.css'],
+		extensions: ['', '.jsx', '.js', '.css'],
 	},
 	node: {
 		__filename: true,
@@ -42,13 +42,11 @@ exports.backend = {
 			raw: true,
 			entryOnly: false,
 		}),
-		new webpack.NormalModuleReplacementPlugin(/(\.scss|\.css)$/,
+		new webpack.NormalModuleReplacementPlugin(/\.css$/,
 			path.join(__dirname, 'node_modules/node-noop/index.js')),
-		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
-			path.join(__dirname, 'fix_modules/async-props/index.jsx')),
 	],
 	externals: nodeModules,
-	devtool: 'sourcemap',
+	devtool: 'source-map',
 }
 
 exports.frontend = {
@@ -58,11 +56,11 @@ exports.frontend = {
 	],
 	output: {
 		path: path.join(__dirname, 'dist'),
-		filename: 'frontend.js',
+		filename: 'frontend.min.js',
 		publicPath: '/',
 	},
 	resolve: {
-		extensions: ['', '.jsx', '.js', '.scss', '.css'],
+		extensions: ['', '.jsx', '.js', '.css'],
 	},
 	module: {
 		loaders: [{
@@ -70,21 +68,25 @@ exports.frontend = {
 			exclude: /(node_modules)/,
 			loader: 'babel',
 		}, {
-			test: /(\.scss|\.css)$/,
-			loader: ExtractTextPlugin.extract('style',
-				'css?sourceMap!postcss!sass?sourceMap'),
+			test: /\.css$/,
+			loader: ExtractTextPlugin.extract('style', 'css!postcss'),
 		}, {
 			test: /\.(png|jpg|jpeg)$/,
 			loader: 'url?limit=3072',
 		}],
 	},
 	externals: {
-		'falcor': 'falcor',
+	  	'falcor': 'falcor',
 		'falcor-http-datasource': 'falcor.HttpDataSource',
 	},
-	postcss: [autoprefixer],
+	postcss: [
+		require('postcss-nested'),
+		require('postcss-cssnext')({
+			browsers: [ 'last 1 versions' ],
+		})
+	],
 	plugins: [
-		new ExtractTextPlugin('main.css'),
+		new ExtractTextPlugin('main.min.css'),
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.optimize.UglifyJsPlugin({
 			compressor: {
@@ -95,7 +97,5 @@ exports.frontend = {
 		new webpack.DefinePlugin({
 			'process.env.NODE_ENV': JSON.stringify('production'),
 		}),
-		new webpack.NormalModuleReplacementPlugin(/^async-props$/,
-			path.join(__dirname, 'fix_modules/async-props/index.jsx')),
 	],
 }

@@ -9,12 +9,7 @@ import config from '../webpack.config.frontend'
 const compiler = webpack(config)
 const devMiddleware = webpackDevMiddleware(compiler, {
 	publicPath: config.output.publicPath,
-	stats: {
-		cached: false,
-		cachedAssets: false,
-		colors: true,
-		exclude: [ 'node_modules' ],
-	},
+	noInfo: true,
 })
 const hotMiddleware = webpackHotMiddleware(compiler)
 

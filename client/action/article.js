@@ -1,6 +1,6 @@
 import { dataModel } from '../../model'
 
-export const loadProps = async params => {
+export const loadProps = async (params, location) => {
 	const { number } = params
 	const content = await dataModel.getValue([ 'articleByNumber', number,
 		'content' ])

@@ -5,7 +5,7 @@ import ArticleList from '../client/container/article-list'
 import Article from '../client/container/article'
 import About from '../client/container/about'
 
-export default (
+const routes = (
 	<Route path="/" component={App}>
 		<IndexRoute component={ArticleList}/>
 		<Route path="articles/" component={ArticleList} />
@@ -13,3 +13,5 @@ export default (
 		<Route path="about/" component={About} />
 	</Route>
 )
+
+export default routes

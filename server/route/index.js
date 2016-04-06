@@ -6,7 +6,7 @@ import falcorMiddleware from 'falcor-express'
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, createRoutes } from 'react-router'
-import AsyncProps, { loadPropsOnServer } from 'async-props'
+import AsyncProps, { loadPropsOnServer } from '../../lib/async-props'
 import template from 'es6-template-strings'
 import ModelRouter from './model-router'
 import routes from '../../route'
@@ -26,6 +26,10 @@ const route = app => {
 		return new ModelRouter(req.cookies.userId)
 	}))
 
+	const templatePath = ENV === 'development' ?
+		path.join(ROOT, 'view/dev-index.html') :
+		path.join(ROOT, 'view/index.html')
+
 	// default index
 	app.get('*', (req, res, next) => {
 		match({ routes, location: req.url },
@@ -38,11 +42,10 @@ const route = app => {
 				const props = { ...renderProps, ...asyncProps }
 				const appHTML = renderToString(React.createElement(AsyncProps,
 					props))
-				const htmlTemplate = await fs.readFile(path.join(ROOT,
-					'view/index.html'))
-				const dataCache = safeScript(JSON.stringify(dataModel.getCache()))
+				const htmlTemplate = await fs.readFile(templatePath)
+				const dataCache = JSON.stringify(dataModel.getCache())
 				const scriptTag = `<script>
-					window.dataCache=${dataCache}
+					window.dataCache=${safeScript(dataCache)}
 				</script>`
 				const html = template(htmlTemplate, {
 					html: appHTML,

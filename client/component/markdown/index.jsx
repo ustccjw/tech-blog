@@ -23,22 +23,22 @@ const CONFIG = {
 	},
 }
 
-export default class Markdown extends React.Component {
-	static propTypes = {
-		content: React.PropTypes.string.isRequired,
-		options: React.PropTypes.object,
+const Markdown = props => {
+	const { content, options } = props
+	const remarkableProps = {
+		source: unsafeScript(content),
+		options: { ...CONFIG, ...options },
 	}
-
-	render() {
-		const { content, options } = this.props
-		const props = {
-			source: unsafeScript(content),
-			options: {...CONFIG, ...options},
-		}
-		return (
-			<ideal-markdown>
-				<Remarkable {...props} />
-			</ideal-markdown>
-		)
-	}
+	return (
+		<ideal-markdown>
+			<Remarkable {...remarkableProps} />
+		</ideal-markdown>
+	)
 }
+
+Markdown.propTypes = {
+	content: React.PropTypes.string.isRequired,
+	options: React.PropTypes.object,
+}
+
+export default Markdown

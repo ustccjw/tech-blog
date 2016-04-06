@@ -5,16 +5,7 @@
 import { dataModel, uiModel } from '../../model'
 import { PAGE_SIZE } from '../config'
 
-export const jumpPage = async page => {
-	try {
-		await uiModel.setValue([ 'articleList', 'page' ], page)
-	} catch (err) {
-		console.error(err)
-	}
-	return global.reload()
-}
-
-export const loadProps = async params => {
+export const loadProps = async (params, location) => {
 	const page = await uiModel.getValue([ 'articleList', 'page' ])
 	const from = (page - 1) * PAGE_SIZE
 	const to = from + PAGE_SIZE - 1
@@ -26,4 +17,9 @@ export const loadProps = async params => {
 	delete articles.length
 	const totalPages = Math.ceil(length / PAGE_SIZE)
 	return { articles, page, totalPages }
+}
+
+export const jumpPage = async page => {
+	await uiModel.setValue([ 'articleList', 'page' ], page)
+	return global.reload('jumpPage: ' + page)
 }

@@ -1,26 +1,29 @@
 import http from 'http'
-import tmpApp from './app'
 import { PORT } from './config'
 
-let app = tmpApp
+let serverListener = null
 const server = http.createServer()
-server.on('request', app)
-server.listen(PORT, () =>
-	console.log('Express server listening on port ' + PORT))
 
-export default server
+const startServer = () => {
+	if (serverListener) {
+		server.removeListener('request', serverListener)
+	}
+	serverListener = require('./app').default
+	server.on('request', serverListener)
+	server.listen(PORT, () =>
+		console.log('Express server listening on port ' + PORT))
+}
 
 if (module.hot) {
 	module.hot.accept('./app', () => {
-		let hotApp = null
 		try {
-			hotApp = require('./app').default
+			startServer()
 		} catch (err) {
 			console.error(err.stack)
-			return
 		}
-		server.removeListener('request', app)
-		app = hotApp
-		server.on('request', app)
 	})
 }
+
+startServer()
+
+export default server
