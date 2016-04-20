@@ -8,7 +8,8 @@ import productionConfig from './webpack.config.production'
 
 function onBuild() {}
 
-gulp.task('clean', () => del([productionConfig.backend.output.path,
+gulp.task('clean-dev', () => del([backendConfig.output.path]))
+gulp.task('clean-build', () => del([productionConfig.backend.output.path,
 	productionConfig.frontend.output.path]))
 
 gulp.task('backend-watch', done => {
@@ -45,6 +46,6 @@ gulp.task('frontend-build', done => {
 	})
 })
 
-gulp.task('dev', gulp.series('backend-watch', 'server-start'))
+gulp.task('dev', gulp.series('clean-dev', 'backend-watch', 'server-start'))
 
-gulp.task('build', gulp.series('clean', 'backend-build', 'frontend-build'))
+gulp.task('build', gulp.series('clean-build', 'backend-build', 'frontend-build'))
