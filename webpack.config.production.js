@@ -1,14 +1,16 @@
-'use strict'
-
-const path = require('path')
-const fs = require('fs')
-const webpack = require('webpack')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
+import path from 'path'
+import fs from 'fs'
+import webpack from 'webpack'
+import ExtractTextPlugin from 'extract-text-webpack-plugin'
+import postcssNested from 'postcss-nested'
+import postcssCssnext from 'postcss-cssnext'
 
 const nodeModules = {}
 fs.readdirSync('node_modules').
 	filter(x => ['.bin'].indexOf(x) === -1).
-	forEach(mod => nodeModules[mod] = 'commonjs ' + mod)
+	forEach(mod => {
+		nodeModules[mod] = `commonjs ${mod}`
+	})
 
 exports.backend = {
 	target: 'node',
@@ -76,15 +78,10 @@ exports.frontend = {
 		}],
 	},
 	externals: {
-	  	'falcor': 'falcor',
+		falcor: 'falcor',
 		'falcor-http-datasource': 'falcor.HttpDataSource',
 	},
-	postcss: [
-		require('postcss-nested'),
-		require('postcss-cssnext')({
-			browsers: [ 'last 1 versions' ],
-		})
-	],
+	postcss: [postcssNested, postcssCssnext],
 	plugins: [
 		new ExtractTextPlugin('main.min.css'),
 		new webpack.optimize.OccurenceOrderPlugin(),

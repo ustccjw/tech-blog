@@ -3,5 +3,3 @@ dev
 build
 dist
 public
-gulpfile.js
-webpack.config.*.js

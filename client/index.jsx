@@ -6,35 +6,35 @@ import AsyncProps from '../lib/async-props'
 
 let rootElement = document.querySelector('main')
 if (!rootElement) {
-  rootElement = document.body.appendChild(document.createElement('main'))
+	const body = document.body
+	rootElement = document.createElement('main')
+	body.insertBefore(rootElement, body.firstChild)
 }
-const onError = err => console.error(err)
 const renderLoading = () => <Loader color="#26A65B" />
-
+const onError = err => console.error(err) // eslint-disable-line no-console
 let render = () => {
-  const routes = require('../route').default
-  const router = (
-    <Router key={Math.random()} routes={routes} history={history}
-      render={props => <AsyncProps {...props} onError={onError}
-      renderLoading={renderLoading} />} />
-  )
-  ReactDOM.render(router, rootElement)
+	const routes = require('../route').default
+	const router = (
+		<Router key={Math.random()} routes={routes} history={history}
+			render={props => <AsyncProps {...props} onError={onError} renderLoading={renderLoading} />} />
+	)
+	ReactDOM.render(router, rootElement)
 }
 
 if (module.hot) {
-  const renderApp = render
-  const renderError = error => {
-    const RedBox = require('redbox-react')
-    ReactDOM.render(<RedBox error={error} />, rootElement)
-  }
-  render = () => {
-    try {
-      renderApp()
-    } catch (error) {
-      renderError(error)
-    }
-  }
-  module.hot.accept('../route', render)
+	const renderApp = render
+	const renderError = err => {
+		const RedBox = require('redbox-react')
+		ReactDOM.render(<RedBox error={err} />, rootElement)
+	}
+	render = () => {
+		try {
+			renderApp()
+		} catch (err) {
+			renderError(err)
+		}
+	}
+	module.hot.accept('../route', render)
 }
 
 render()

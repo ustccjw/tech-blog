@@ -1,16 +1,12 @@
-// action 按照 route component 划分
-// action 最后会触发 reload 完成页面 rerender
-// action 是异步的，可以实现 action 执行序列化
-
 import { dataModel, uiModel } from '../../model'
 import { PAGE_SIZE } from '../config'
 
-export const loadProps = async (params, location) => {
-	const page = await uiModel.getValue([ 'articleList', 'page' ])
+export const loadProps = async () => {
+	const page = await uiModel.getValue(['articleList', 'page'])
 	const from = (page - 1) * PAGE_SIZE
 	const to = from + PAGE_SIZE - 1
-	const response = await dataModel.get([ 'articles', { from, to },
-		[ 'number', 'introduction' ] ], [ 'articles', 'length' ])
+	const response = await dataModel.get(['articles', { from, to }, ['number', 'introduction']],
+		['articles', 'length'])
 	const { articles } = response.json
 	const length = articles.length
 	delete articles.$__path
@@ -20,6 +16,6 @@ export const loadProps = async (params, location) => {
 }
 
 export const jumpPage = async page => {
-	await uiModel.setValue([ 'articleList', 'page' ], page)
-	return global.reload('jumpPage: ' + page)
+	await uiModel.setValue(['articleList', 'page'], page)
+	return global.reload('article-list: jumpPage', page)
 }

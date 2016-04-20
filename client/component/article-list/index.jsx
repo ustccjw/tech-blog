@@ -12,9 +12,9 @@ const ArticleList = props => {
 		<Card key={article.number} article={article} />
 	)
 	const handleChange = async type => {
-		if ('prev' === type) {
+		if (type === 'prev') {
 			jumpPage(page - 1)
-		} else if ('next' === type) {
+		} else if (type === 'next') {
 			jumpPage(page + 1)
 		}
 	}

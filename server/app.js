@@ -5,7 +5,6 @@ import logger from 'morgan'
 import methodOverride from 'method-override'
 import session from 'express-session'
 import bodyParser from 'body-parser'
-import multer from 'multer'
 import cookieParser from 'cookie-parser'
 import responseTime from 'response-time'
 import compression from 'compression'
@@ -14,7 +13,6 @@ import route from './route'
 import frontMiddleware from './front-middleware'
 import { ENV, ROOT } from './config'
 
-const upload = multer()
 const app = express()
 export default app
 
@@ -24,7 +22,7 @@ app.enable('trust proxy')
 logger.token('date', () => new Date().toString())
 
 // logger
-if ('production' === ENV) {
+if (ENV === 'production') {
 	const logPath = path.join(ROOT, 'access.log')
 	const accessLogStream = fs.createWriteStream(logPath, { flags: 'a' })
 	app.use(logger('combined', { stream: accessLogStream }))
@@ -54,12 +52,12 @@ app.use(responseTime())
 app.use(compression())
 
 // error handle last
-if ('development' === ENV) {
+if (ENV === 'development') {
 	app.use(errorHandler())
 }
 
 // frontend webpack watch
-if ('development' === ENV) {
+if (ENV === 'development') {
 	frontMiddleware(app)
 }
 

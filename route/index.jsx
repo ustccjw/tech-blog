@@ -7,7 +7,7 @@ import About from '../client/container/about'
 
 const routes = (
 	<Route path="/" component={App}>
-		<IndexRoute component={ArticleList}/>
+		<IndexRoute component={ArticleList} />
 		<Route path="articles/" component={ArticleList} />
 		<Route path="articles/:number/" component={Article} />
 		<Route path="about/" component={About} />

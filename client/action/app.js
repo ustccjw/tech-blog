@@ -1,1 +1,1 @@
-export const loadProps = async (params, location) => {}
+export const loadProps = async () => {}

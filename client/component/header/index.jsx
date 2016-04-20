@@ -8,7 +8,7 @@ const Header = props => {
 	const linksComponent = links.map(({ label, value }) => {
 		let link = <Link to={value}>{label}</Link>
 		if (value.startsWith('http')) {
-			link = <a href={value} target='_blank'>{label}</a>
+			link = <a href={value} target="_blank">{label}</a>
 		}
 		return <li key={label}>{link}</li>
 	})

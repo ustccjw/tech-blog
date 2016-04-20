@@ -6,9 +6,22 @@ indent_style = tab
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
-max_line_length = 80
+max_line_length = 100
+tab_width = 2
 
-[{*.yml, .eslintrc, .babelrc, package.json}]
+[package.json]
+indent_style = space
+indent_size = 2
+
+[.babelrc]
+indent_style = space
+indent_size = 2
+
+[.eslintrc]
+indent_style = space
+indent_size = 2
+
+[*.{yaml,yml}]
 indent_style = space
 indent_size = 2
 

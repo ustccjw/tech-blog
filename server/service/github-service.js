@@ -8,8 +8,7 @@ const getArticles = async url => {
 		labels: 'blog',
 		sort: 'created',
 	})
-	url = `${url}?${query}`
-	const  response = await fetch(url)
+	const response = await fetch(`${url}?${query}`)
 	const articles = await checkStatus(response)
 	return articles.map(article => ({
 		number: article.number,
@@ -19,7 +18,7 @@ const getArticles = async url => {
 		commentsUrl: article.comments_url,
 		createdDate: article.created_at,
 		updateDate: article.updated_at,
-		introduction: article.body.slice(0, 200) + '...',
+		introduction: `${article.body.slice(0, 200)}...`,
 		author: {
 			name: article.user.login,
 			link: article.user.html_url,

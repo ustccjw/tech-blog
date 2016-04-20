@@ -18,4 +18,4 @@ export default class Resume {
 	}
 }
 
-Resume.init().catch(error => console.error(error.stack))
+Resume.init().catch(error => console.error(error.stack)) // eslint-disable-line no-console

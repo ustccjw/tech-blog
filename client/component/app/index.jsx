@@ -6,7 +6,8 @@ import './style'
 const App = props => {
 	const { children } = props
 	const headProps = {
-		title: 'My name is Jiawei Chen, this blog is for Exploring and Practicing, especially for React.',
+		title: 'My name is Jiawei Chen, this blog is for Exploring and Practicing, ' +
+			'especially for React.',
 		links: [{
 			label: 'POSTS',
 			value: '/articles/',

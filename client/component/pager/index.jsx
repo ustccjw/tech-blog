@@ -6,12 +6,12 @@ const Pager = props => {
 	const { title, handleChange, canPrev, canNext } = props
 	const { prev, next } = title
 	const prevComponent = canPrev && (
-		<button href="#" onClick={e => handleChange('prev')}>
+		<button href="#" onClick={() => handleChange('prev')}>
 			{prev}
 		</button>
 	)
 	const nextComponent = canNext && (
-		<button href="#" onClick={e => handleChange('next')}>
+		<button href="#" onClick={() => handleChange('next')}>
 			{next}
 		</button>
 	)

@@ -12,14 +12,9 @@ const CONFIG = {
 	typographer: true,
 	highlight: (str, lang) => {
 		if (lang && hljs.getLanguage(lang)) {
-			try {
-				return hljs.highlight(lang, str).value
-			} catch (err) {}
+			return hljs.highlight(lang, str).value
 		}
-		try {
-			return hljs.highlightAuto(str).value
-		} catch (err) {}
-		return ''
+		return hljs.highlightAuto(str).value
 	},
 }
 

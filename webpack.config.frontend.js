@@ -1,14 +1,15 @@
-'use strict'
+import path from 'path'
+import webpack from 'webpack'
+import postcssNested from 'postcss-nested'
+import postcssCssnext from 'postcss-cssnext'
 
-const path = require('path')
-const webpack = require('webpack')
 
 let root = __dirname
 if (__dirname.endsWith('/dev')) {
 	root = path.join(__dirname, '../')
 }
 
-module.exports = {
+const config = {
 	entry: [
 		'webpack-hot-middleware/client',
 		'babel-polyfill',
@@ -36,15 +37,10 @@ module.exports = {
 		}],
 	},
 	externals: {
-		'falcor': 'falcor',
+		falcor: 'falcor',
 		'falcor-http-datasource': 'falcor.HttpDataSource',
 	},
-	postcss: [
-		require('postcss-nested'),
-		require('postcss-cssnext')({
-			browsers: [ 'last 1 versions' ],
-		})
-	],
+	postcss: [postcssNested, postcssCssnext],
 	plugins: [
 		new webpack.optimize.OccurenceOrderPlugin(),
 		new webpack.HotModuleReplacementPlugin(),
@@ -54,3 +50,5 @@ module.exports = {
 	],
 	devtool: 'inline-source-map',
 }
+
+export default config

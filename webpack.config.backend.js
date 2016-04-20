@@ -1,13 +1,13 @@
-'use strict'
-
-const path = require('path')
-const fs = require('fs')
-const webpack = require('webpack')
+import path from 'path'
+import fs from 'fs'
+import webpack from 'webpack'
 
 const nodeModules = {}
 fs.readdirSync('node_modules').
 	filter(x => ['.bin'].indexOf(x) === -1).
-	forEach(mod => nodeModules[mod] = 'commonjs ' + mod)
+	forEach(mod => {
+		nodeModules[mod] = `commonjs ${mod}`
+	})
 
 module.exports = {
 	target: 'node',

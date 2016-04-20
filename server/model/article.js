@@ -4,7 +4,7 @@ import { githubService } from '../service/'
 const { redis } = db
 
 export default class Article {
-	static get(start, stop=start) {
+	static get(start, stop = start) {
 		return redis.zrange('articles', start, stop)
 	}
 
@@ -27,5 +27,5 @@ export default class Article {
 }
 
 Article.init().catch(error => {
-	console.error(error.stack)
+	console.error(error.stack) // eslint-disable-line no-console
 })
