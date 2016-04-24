@@ -4,6 +4,12 @@
 
   parser: babel-eslint
 
+  settings:
+
+    # import-resolver
+    import/resolver:
+      webpack: { config: 'webpack.config.js' }
+
   rules:
 
     semi: [2, never]
@@ -16,4 +22,6 @@
     # react
     react/prop-types: 0
     react/jsx-closing-bracket-location: 0
+    react/jsx-first-prop-new-line: 0
     react/jsx-indent-props: [2, tab]
+    react/jsx-indent: [2, tab]

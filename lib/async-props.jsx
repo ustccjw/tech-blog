@@ -103,7 +103,7 @@ class AsyncProps extends React.Component {
 	}
 
 	componentWillUnmount() {
-		this._unmounted = true
+		this.unmounted = true
 	}
 
 	async loadAsyncProps(components, params, location) {
@@ -118,7 +118,7 @@ class AsyncProps extends React.Component {
 			return
 		}
 		const sameLocation = this.props.location === location
-		if (sameLocation && !this._unmounted) {
+		if (sameLocation && !this.unmounted) {
 			this.setState({ loading: false, prevProps: null, propsAndComponents })
 		}
 	}
